@@ -37,6 +37,33 @@ class CaesarCipherProgram
     }
 
 }
+public class _094_BinaryTreeInorderTraversal
+{
+    public IList<int> InorderTraversal(NewTreeNode root)
+    {
+        IList<int> result = new List<int>();
+        InorderTraversal(root, result);
+        return result;
+    }
+
+    public void InorderTraversal(NewTreeNode node, IList<int> result)
+    {
+        if (node == null) return;
+
+        InorderTraversal(node.left, result);
+        result.Add(node.val);
+        InorderTraversal(node.right, result);
+    }
+}
+
+public class NewTreeNode
+{
+    public int val;
+    public NewTreeNode left;
+    public NewTreeNode right;
+
+    public NewTreeNode(int x) { val = x; }
+}
 
 public class TreeNode
 {
