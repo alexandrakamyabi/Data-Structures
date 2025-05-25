@@ -1,68 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 /// <summary>
-/// caesar cipher encryption, shifting each letter by k positions.
+/// Main entry point for running multiple algorithm, data structure demos and HackerRank/LeetCode problems.
+/// Simulates a C++ style `main()` structure in C#.
 /// </summary>
-class CaesarCipherProgram
+class Program
 {
+    static void Main()
+    {
+        // ---------------- Caesar Cipher Test ----------------
+        string encrypted = CaesarCipher("middle-Outz", 2);
+        Console.WriteLine("Caesar Cipher: " + encrypted);
+
+        // ---------------- Binary Tree Inorder Traversal ----------------
+        var root = new NewTreeNode(1)
+        {
+            right = new NewTreeNode(2)
+            {
+                left = new NewTreeNode(3)
+            }
+        };
+        var traversal = new BinaryTreeInorderTraversal();
+        IList<int> inorder = traversal.InorderTraversal(root);
+        Console.WriteLine("Inorder Traversal: " + string.Join(",", inorder));
+
+        // ---------------- Sliding Window Median ----------------
+        int[] nums = { 1, 2, 3, 4, 5 };
+        List<double> medians = Solution.SlidingWindowMedian(nums, 3);
+        Console.WriteLine("Sliding Window Medians: " + string.Join(", ", medians));
+
+        // ---------------- Merge Sorted Arrays ----------------
+        int[] A = { 1, 2, 3, 0, 0, 0 };
+        int[] B = { 2, 5, 6 };
+        var sol = new Solution();
+        sol.MergeSortedArrays(A, 3, B, 3);
+        Console.WriteLine("Merged Array: " + string.Join(", ", A));
+
+        // ---------------- Lowest Common Ancestor ----------------
+        TreeNode a = new TreeNode('D');
+        TreeNode b = new TreeNode('E');
+        TreeNode rootLCA = new TreeNode('B') { Left = a, Right = b };
+        TreeNode lca = Solution.FindLCA(rootLCA, a, b);
+        Console.WriteLine("LCA of D and E: " + lca.value);
+    }
+
+    /// <summary>
+    /// Caesar cipher encryption: shifts each letter by a given offset.
+    /// Non alphabet characters remain unchanged.
+    /// </summary>
+    /// <param name="s">Original string</param>
+    /// <param name="k">Shift amount</param>
+    /// <returns>Encrypted string</returns>
     static string CaesarCipher(string s, int k)
     {
-        k = k % 26;  // Normalize shift to within alphabet range
+        k %= 26;
         char[] result = new char[s.Length];
 
         for (int i = 0; i < s.Length; i++)
         {
             char c = s[i];
-
             if (char.IsLower(c))
-            {
-                // Shift lowercase letters within 'a'-'z'
                 result[i] = (char)((c - 'a' + k) % 26 + 'a');
-            }
             else if (char.IsUpper(c))
-            {
-                // Shift uppercase letters within 'A'-'Z'
                 result[i] = (char)((c - 'A' + k) % 26 + 'A');
-            }
             else
-            {
-                // Non-alphabet characters are not changed
                 result[i] = c;
-            }
         }
 
         return new string(result);
     }
 }
-
 /// <summary>
-/// inorder traversal done on a binary tree of integers.
-/// </summary>
-public class _094_BinaryTreeInorderTraversal
-{
-    public IList<int> InorderTraversal(NewTreeNode root)
-    {
-        IList<int> result = new List<int>();
-        InorderTraversal(root, result);
-        return result;
-    }
-
-    // recursive helper method
-    public void InorderTraversal(NewTreeNode node, IList<int> result)
-    {
-        if (node == null) return;
-
-        InorderTraversal(node.left, result);   // visit left subtree
-        result.Add(node.val);                  // visit current node
-        InorderTraversal(node.right, result);  // visit right subtree
-    }
-}
-
-/// <summary>
-/// node structure for binary tree with integer values.
+/// Binary tree node structure for integers.
 /// </summary>
 public class NewTreeNode
 {
@@ -70,11 +80,38 @@ public class NewTreeNode
     public NewTreeNode left;
     public NewTreeNode right;
 
-    public NewTreeNode(int x) { val = x; }
+    public NewTreeNode(int x) => val = x;
 }
 
 /// <summary>
-/// node structure for binary tree with character values (used for LCA).
+/// Performs recursive inorder traversal on a binary tree of integers.
+/// </summary>
+public class BinaryTreeInorderTraversal
+{
+    /// <summary>
+    /// Public method that initializes the result list and calls the traversal.
+    /// </summary>
+    public IList<int> InorderTraversal(NewTreeNode root)
+    {
+        IList<int> result = new List<int>();
+        InorderTraversal(root, result);
+        return result;
+    }
+
+    /// <summary>
+    /// Recursive helper method for inorder traversal.
+    /// </summary>
+    private void InorderTraversal(NewTreeNode node, IList<int> result)
+    {
+        if (node == null) return;
+        InorderTraversal(node.left, result);
+        result.Add(node.val);
+        InorderTraversal(node.right, result);
+    }
+}
+
+/// <summary>
+/// Node structure for character based binary trees.
 /// </summary>
 public class TreeNode
 {
@@ -89,84 +126,59 @@ public class TreeNode
     }
 }
 
+/// <summary>
+/// Collection of static solutions for common algorithms and problems.
+/// </summary>
 public class Solution
 {
     /// <summary>
-    /// finds the Lowest Common Ancestor (LCA) of two nodes in a binary tree.
+    /// Finds the Lowest Common Ancestor (LCA) of two nodes in a binary tree.
     /// </summary>
     public static TreeNode FindLCA(TreeNode root, TreeNode p, TreeNode q)
     {
-        if (root == null || root == p || root == q)
-            return root;
-
+        if (root == null || root == p || root == q) return root;
         TreeNode left = FindLCA(root.Left, p, q);
         TreeNode right = FindLCA(root.Right, p, q);
-
-        if (left != null && right != null)
-            return root;
-
-        // Return whichever subtree has a match
-        return left ?? right;
+        return (left != null && right != null) ? root : left ?? right;
     }
 
     /// <summary>
-    /// returns the list of medians from all sliding windows of given size in an array.
+    /// Computes median values for all sliding windows of a fixed size in the array.
     /// </summary>
     public static List<double> SlidingWindowMedian(int[] nums, int windowSize)
     {
         var medians = new List<double>();
-
         if (nums == null || nums.Length == 0 || windowSize <= 0 || windowSize > nums.Length)
             return medians;
 
         for (int i = 0; i <= nums.Length - windowSize; i++)
         {
             var window = new List<int>();
-
-            // fill window
             for (int j = i; j < i + windowSize; j++)
                 window.Add(nums[j]);
 
-            window.Sort(); // sorting to get median easily
-
+            window.Sort();
             int mid = windowSize / 2;
-
-            if (windowSize % 2 == 0)
-            {
-                // average of two middle values
-                double median = (window[mid - 1] + window[mid]) / 2.0;
-                medians.Add(median);
-            }
-            else
-            {
-                // single middle value
-                medians.Add(window[mid]);
-            }
+            medians.Add(windowSize % 2 == 0
+                ? (window[mid - 1] + window[mid]) / 2.0
+                : window[mid]);
         }
 
         return medians;
     }
 
     /// <summary>
-    /// merges two sorted arrays A and b into A in-place.
+    /// Merges two sorted arrays in place into array A.
     /// </summary>
     public void MergeSortedArrays(int[] A, int m, int[] b, int n)
     {
-        int i = m - 1;            // Last element of actual A data
-        int j = n - 1;            // Last element of b
-        int k = m + n - 1;        // Last position in A
-
-        // Merge from back to avoid overwriting
+        int i = m - 1, j = n - 1, k = m + n - 1;
         while (j >= 0)
         {
             if (i >= 0 && A[i] > b[j])
-            {
                 A[k--] = A[i--];
-            }
             else
-            {
                 A[k--] = b[j--];
-            }
         }
     }
 }

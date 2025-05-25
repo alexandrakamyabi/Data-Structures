@@ -13,10 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\src">
+      <UniqueIdentifier>{4ef7e461-4d27-4447-bf4f-df7f2388a589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\inc">
+      <UniqueIdentifier>{7fd403e2-e3d9-4230-95d5-bfc22a99755e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DataStructuresC++.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="dataStructuresC++.cpp">
+      <Filter>Source Files\src</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="headers.h">
+      <Filter>Source Files\inc</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

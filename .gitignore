@@ -1,39 +1,58 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
+# --- GENERAL ---
 *.suo
 *.user
-_ReSharper.*
-bin
-obj
-packages
+*.tmp
+*.log
+*.cache
 
-# Precompiled Headers
+# --- C++ Build Artifacts ---
+*.obj
+*.exe
+*.pdb
+*.ilk
+*.lib
+*.exp
+*.idb
+*.ipch
+*.tlog
+*.VC.db
+*.VC.opendb
+
+# --- C# Build Artifacts ---
+bin/
+obj/
+*.dll
+
+# --- OS-generated ---
+.DS_Store
+Thumbs.db
+
+# --- IDE Specific ---
+.vs/
+_ReSharper.*
+*.sdf
+*.opensdf
+
+# --- Packages (NuGet / .NET) ---
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# --- Precompiled Headers ---
 *.gch
 *.pch
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
+# --- Fortran ---
 *.mod
 *.smod
 
-# Compiled Static libraries
+# --- Static/Dynamic Libs ---
 *.lai
 *.la
 *.a
-*.lib
+*.so
+*.dylib
 
-# Executables
-*.exe
+# --- Executables ---
 *.out
 *.app
