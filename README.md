@@ -1,1 +1,1 @@
-Data structures studies in C++ and C#. There ar problems and code solutions/practices.
+Multiple algorithm, data structure demos and HackerRank/LeetCode problems in C++ and C#.
