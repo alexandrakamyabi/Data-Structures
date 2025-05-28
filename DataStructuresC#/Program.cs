@@ -43,6 +43,20 @@ class Program
         TreeNode rootLCA = new TreeNode('B') { Left = a, Right = b };
         TreeNode lca = Solution.FindLCA(rootLCA, a, b);
         Console.WriteLine("LCA of D and E: " + lca.value);
+        // ---------------- Which cat will catch the mouse first? ----------------
+        var solver = new CatAndMouseSolver();
+
+        int queries = int.Parse(Console.ReadLine());
+
+        for (int i = 0; i < queries; i++)
+        {
+            var parts = Console.ReadLine().Split();
+            int x = int.Parse(parts[0]);
+            int y = int.Parse(parts[1]);
+            int z = int.Parse(parts[2]);
+
+            Console.WriteLine(solver.GetWinner(x, y, z));
+        }
     }
 
     /// <summary>
@@ -127,6 +141,27 @@ public class TreeNode
 }
 
 /// <summary>
+/// Determines which cat will catch the mouse first or if the mouse escapes.
+/// </summary>
+/// <param name="catA">Position of Cat A</param>
+/// <param name="catB">Position of Cat B</param>
+/// <param name="mouse">Position of the Mouse</param>
+/// <returns>"Cat A", "Cat B", or "Mouse C"</returns>
+public class CatAndMouseSolver
+{
+    public string GetWinner(int catA, int catB, int mouse)
+    {
+        int distanceA = Math.Abs(catA - mouse);
+        int distanceB = Math.Abs(catB - mouse);
+
+        if (distanceA < distanceB)
+            return "Cat A";
+        else if (distanceB < distanceA)
+            return "Cat B";
+        else
+            return "Mouse C";
+    }
+}
 /// Collection of static solutions for common algorithms and problems.
 /// </summary>
 public class Solution
