@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\DataStructuresC#\\",
+  "WorkspaceRootPath": "D:\\DataStructuresStudies\\DataStructuresC#\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{08BECC68-09A8-4CAD-9D6B-72E3CE583A66}|DataStructuresC#.csproj|e:\\datastructuresc#\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{08BECC68-09A8-4CAD-9D6B-72E3CE583A66}|DataStructuresC#.csproj|d:\\datastructuresstudies\\datastructuresc#\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{08BECC68-09A8-4CAD-9D6B-72E3CE583A66}|DataStructuresC#.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -20,11 +20,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "E:\\DataStructuresC#\\Program.cs",
+              "DocumentMoniker": "D:\\DataStructuresStudies\\DataStructuresC#\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "E:\\DataStructuresC#\\Program.cs",
+              "ToolTip": "D:\\DataStructuresStudies\\DataStructuresC#\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-06T20:13:20.212Z",
               "EditorCaption": ""

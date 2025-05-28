@@ -59,7 +59,18 @@ string catAndMouse(int x, int y, int z) {
     else if (distB < distA) return "Cat B";
     else return "Mouse C";
 }
+int howManyGames(int p, int d, int m, int s) {
+    int gamesBought = 0;
+    int currentPrice = p;
 
+    while (s >= currentPrice) {
+        s -= currentPrice;
+        gamesBought++;
+        currentPrice = max(currentPrice - d, m);
+    }
+
+    return gamesBought;
+}
 void update(int* a, int* b) {
     int tempA = *a, tempB = *b;
     *a = tempA + tempB;
