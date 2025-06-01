@@ -81,6 +81,23 @@ int towerBreakers(int n, int m) {
     return (m == 1 || m % 2 == 0) ? 2 : 1;
 }
 
+int beautifulTriplets(int d, vector<int> arr) {
+    unordered_set<int> elements(arr.begin(), arr.end());
+    int count = 0;
+
+    for (int num : arr) {
+        if (elements.count(num + d) && elements.count(num + 2 * d))
+            count++;
+    }
+}
+
+void testBeautifulTriplets() {
+    vector<int> arr = { 1, 2, 4, 5, 7, 8, 10 };
+    int d = 3;
+
+    cout << "there are: " << beautifulTriplets(d, arr) << "Beautiful Triplets" << endl;
+}
+
 vector<double> SlidingWindowMedian(const vector<int>& num, int windowSize) {
     vector<double> medians;
     if (num.empty() || windowSize <= 0 || windowSize > num.size()) return medians;
@@ -211,6 +228,9 @@ int main() {
 
     //Cat and Mouse (HackerRank)
     cout << catAndMouse(1, 3, 2) << endl;
+
+    // Beautiful Triplets
+    testBeautifulTriplets();
 
     return 0;
 }

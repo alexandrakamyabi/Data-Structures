@@ -57,6 +57,17 @@ class Program
 
             Console.WriteLine(solver.GetWinner(x, y, z));
         }
+        // ---------------- How many beautiful triplets? ----------------
+        var inputs = Console.ReadLine().Split();
+        int n = int.Parse(inputs[0]);
+        int d = int.Parse(inputs[1]);
+
+        var arr = new List<int>();
+        foreach (var s in Console.ReadLine().Split())
+            arr.Add(int.Parse(s));
+
+        var solve = new BeautifulTriplets();
+        Console.WriteLine(solve.CountBeautifulTriplets(d, arr));
     }
 
     /// <summary>
@@ -162,8 +173,27 @@ public class CatAndMouseSolver
             return "Mouse C";
     }
 }
-/// Collection of static solutions for common algorithms and problems.
+/// <summary>
+/// Given an increasing sequenc of integers and the value of d
+/// count the number of beautiful triplets in the sequence.
 /// </summary>
+///
+public class BeautifulTriplets
+{
+    public int CountBeautifulTriplets(int d, List<int> arr)
+    {
+        var set = new HashSet<int>(arr);
+        int count = 0;
+
+        foreach (int num in arr)
+        {
+            if (set.Contains(num + d) && set.Contains(num + 2 * d))
+                count++;
+        }
+
+        return count;
+    }
+}
 public class Solution
 {
     /// <summary>
