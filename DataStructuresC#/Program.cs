@@ -68,7 +68,16 @@ class Program
 
         var solve = new BeautifulTriplets();
         Console.WriteLine(solve.CountBeautifulTriplets(d, arr));
-    }
+
+        // ---------------- Angry Profssor ----------------
+        var prof = new Professor();
+
+        var result1 = prof.AngryProfessor(3, new List<int> { -1, -3, 4, 2 });
+        var result2 = prof.AngryProfessor(2, new List<int> { 0, -1, 2, 1 });
+
+        Console.WriteLine("Will class run: " + result1);
+        Console.WriteLine("Will class run: " + result2);
+}
 
     /// <summary>
     /// Caesar cipher encryption: shifts each letter by a given offset.
@@ -177,7 +186,6 @@ public class CatAndMouseSolver
 /// Given an increasing sequenc of integers and the value of d
 /// count the number of beautiful triplets in the sequence.
 /// </summary>
-///
 public class BeautifulTriplets
 {
     public int CountBeautifulTriplets(int d, List<int> arr)
@@ -192,6 +200,23 @@ public class BeautifulTriplets
         }
 
         return count;
+    }
+}
+/// <summary>
+/// Given an increasing sequenc of integers and the value of d
+/// count the number of beautiful triplets in the sequence.
+/// </summary>
+public class Professor
+{
+    public string AngryProfessor(int k, List<int> a)
+    {
+        int onTime = 0;
+        foreach (int arrival in a)
+        {
+            if (arrival <= 0) onTime++;
+            if (onTime >= k) return "No";
+        }
+        return "Yes";
     }
 }
 public class Solution
