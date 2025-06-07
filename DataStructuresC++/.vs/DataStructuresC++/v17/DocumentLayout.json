@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{664E9B08-EBE2-4E31-841E-4AAE781B8022}|DataStructuresC\u002B\u002B.vcxproj|D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\dataStructuresC\u002B\u002B.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{664E9B08-EBE2-4E31-841E-4AAE781B8022}|DataStructuresC\u002B\u002B.vcxproj|solutionrelative:dataStructuresC\u002B\u002B.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{664E9B08-EBE2-4E31-841E-4AAE781B8022}|DataStructuresC\u002B\u002B.vcxproj|D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\src\\DataStructuresC\u002B\u002B.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{664E9B08-EBE2-4E31-841E-4AAE781B8022}|DataStructuresC\u002B\u002B.vcxproj|solutionrelative:src\\DataStructuresC\u002B\u002B.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{664E9B08-EBE2-4E31-841E-4AAE781B8022}|DataStructuresC\u002B\u002B.vcxproj|D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\src\\PrimeCalculator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{664E9B08-EBE2-4E31-841E-4AAE781B8022}|DataStructuresC\u002B\u002B.vcxproj|solutionrelative:src\\PrimeCalculator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{664E9B08-EBE2-4E31-841E-4AAE781B8022}|DataStructuresC\u002B\u002B.vcxproj|D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\inc\\PrimeCalculator.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{664E9B08-EBE2-4E31-841E-4AAE781B8022}|DataStructuresC\u002B\u002B.vcxproj|solutionrelative:inc\\PrimeCalculator.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{664E9B08-EBE2-4E31-841E-4AAE781B8022}|DataStructuresC\u002B\u002B.vcxproj|D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\inc\\Headers.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{664E9B08-EBE2-4E31-841E-4AAE781B8022}|DataStructuresC\u002B\u002B.vcxproj|solutionrelative:inc\\Headers.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +31,53 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "dataStructuresC\u002B\u002B.cpp",
-              "DocumentMoniker": "D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\dataStructuresC\u002B\u002B.cpp",
-              "RelativeDocumentMoniker": "dataStructuresC\u002B\u002B.cpp",
-              "ToolTip": "D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\dataStructuresC\u002B\u002B.cpp",
-              "RelativeToolTip": "dataStructuresC\u002B\u002B.cpp",
-              "ViewState": "AgIAAOgAAAAAAAAAAAAgwPgAAAAWAAAAAAAAAA==",
+              "Title": "DataStructuresC\u002B\u002B.cpp",
+              "DocumentMoniker": "D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\src\\DataStructuresC\u002B\u002B.cpp",
+              "RelativeDocumentMoniker": "src\\DataStructuresC\u002B\u002B.cpp",
+              "ToolTip": "D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\src\\DataStructuresC\u002B\u002B.cpp",
+              "RelativeToolTip": "src\\DataStructuresC\u002B\u002B.cpp",
+              "ViewState": "AgIAAPYAAAAAAAAAAAAAAAYBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-05-07T22:45:00.011Z",
+              "WhenOpened": "2025-06-07T00:06:37.593Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PrimeCalculator.h",
+              "DocumentMoniker": "D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\inc\\PrimeCalculator.h",
+              "RelativeDocumentMoniker": "inc\\PrimeCalculator.h",
+              "ToolTip": "D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\inc\\PrimeCalculator.h",
+              "RelativeToolTip": "inc\\PrimeCalculator.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-06-07T00:04:40.808Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PrimeCalculator.cpp",
+              "DocumentMoniker": "D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\src\\PrimeCalculator.cpp",
+              "RelativeDocumentMoniker": "src\\PrimeCalculator.cpp",
+              "ToolTip": "D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\src\\PrimeCalculator.cpp",
+              "RelativeToolTip": "src\\PrimeCalculator.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-06-07T00:03:50.698Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Headers.h",
+              "DocumentMoniker": "D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\inc\\Headers.h",
+              "RelativeDocumentMoniker": "inc\\Headers.h",
+              "ToolTip": "D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\inc\\Headers.h",
+              "RelativeToolTip": "inc\\Headers.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-06-07T00:02:50.487Z",
               "EditorCaption": ""
             }
           ]

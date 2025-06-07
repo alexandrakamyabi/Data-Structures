@@ -1,18 +1,7 @@
 
-#include <algorithm>
-#include <cmath>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <set>
-#include <stack>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
-
+#include <Headers.h>
+#include "PrimeCalculator.h"
 using namespace std;
-using namespace std::chrono;
 
 typedef long long ll;
 typedef unsigned long long ull;
@@ -50,6 +39,19 @@ bool hasZeroSumSubarray(int nums[], int n) {
     }
     return false;
 }
+string angryProfessor(int k, const vector<int>& a) {
+    int onTimeCount = 0;
+    for (int arrival : a) {
+        if (arrival <= 0) onTimeCount++;
+        if (onTimeCount >= k) return "No";
+
+    }
+    return "Yes";
+}
+void testAngryProfessor() {
+    cout << angryProfessor(3, {-1, -3, 4, 2}) << endl;
+    cout << angryProfessor(2, { 0, -1, 2, 1 }) << endl;
+}
 
 string caesarCipher(string s, int k) {
     k = k % 26;
@@ -70,7 +72,18 @@ string catAndMouse(int x, int y, int z) {
     else if (distB < distA) return "Cat B";
     else return "Mouse C";
 }
+int howManyGames(int p, int d, int m, int s) {
+    int gamesBought = 0;
+    int currentPrice = p;
 
+    while (s >= currentPrice) {
+        s -= currentPrice;
+        gamesBought++;
+        currentPrice = max(currentPrice - d, m);
+    }
+
+    return gamesBought;
+}
 void update(int* a, int* b) {
     int tempA = *a, tempB = *b;
     *a = tempA + tempB;
@@ -79,6 +92,33 @@ void update(int* a, int* b) {
 
 int towerBreakers(int n, int m) {
     return (m == 1 || m % 2 == 0) ? 2 : 1;
+}
+
+int beautifulTriplets(int d, vector<int> arr) {
+    unordered_set<int> elements(arr.begin(), arr.end());
+    int count = 0;
+
+    for (int num : arr) {
+        if (elements.count(num + d) && elements.count(num + 2 * d))
+            count++;
+    }
+}
+
+void testBeautifulTriplets() {
+    vector<int> arr = { 1, 2, 4, 5, 7, 8, 10 };
+    int d = 3;
+
+    cout << "there are: " << beautifulTriplets(d, arr) << "Beautiful Triplets" << endl;
+}
+
+void testPrimeCalculator() {
+    long long limit;
+    int threads;
+    std::cout << "Enter upper limit: ";
+    std::cin >> limit;
+    std::cout << "Enter number of threads: ";
+    std::cin >> threads;
+    runPrimeThreaded(limit, threads);
 }
 
 vector<double> SlidingWindowMedian(const vector<int>& num, int windowSize) {
@@ -197,20 +237,29 @@ void SinglyList::Print() {
 
 // ---------------------------- MAIN ----------------------------
 int main() {
-    // You can call whichever feature you want to test below
 
-    // Example: Caesar Cipher
-    // cout << caesarCipher("middle-Outz", 2) << endl;
 
-    // Example: Tower Breakers
-    // cout << towerBreakers(1, 4) << endl;
+    // Caesar Cipher
+    cout << caesarCipher("middle-Outz", 2) << endl;
 
-    // Example: Sliding Window Median
-    // auto medians = SlidingWindowMedian({1,2,3,4,5}, 3);
-    // for (auto m : medians) cout << m << " ";
+    // Tower Breakers (HackerRank)
+    cout << towerBreakers(1, 4) << endl;
 
-    // Example: Cat and Mouse
+    // Sliding Window Median
+    auto medians = SlidingWindowMedian({1,2,3,4,5}, 3);
+    for (auto m : medians) cout << m << " ";
+
+    //Cat and Mouse (HackerRank)
     cout << catAndMouse(1, 3, 2) << endl;
+
+    // Beautiful Triplets
+    testBeautifulTriplets();
+
+    // Angry Professor
+    testAngryProfessor();
+
+    // Prime Calculator
+    testPrimeCalculator();
 
     return 0;
 }

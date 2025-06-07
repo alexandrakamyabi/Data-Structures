@@ -21,12 +21,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dataStructuresC++.cpp">
+    <ClCompile Include="src\DataStructuresC++.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PrimeCalculator.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers.h">
+    <ClInclude Include="inc\Headers.h">
+      <Filter>Source Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\PrimeCalculator.h">
       <Filter>Source Files\inc</Filter>
     </ClInclude>
   </ItemGroup>
