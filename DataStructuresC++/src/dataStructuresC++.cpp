@@ -102,6 +102,7 @@ int beautifulTriplets(int d, vector<int> arr) {
         if (elements.count(num + d) && elements.count(num + 2 * d))
             count++;
     }
+    return count;
 }
 
 void testBeautifulTriplets() {
