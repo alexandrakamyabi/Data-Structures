@@ -1,6 +1,7 @@
 
 #include <Headers.h>
 #include "PrimeCalculator.h"
+#include "MatrixMultiplier.h"
 using namespace std;
 
 typedef long long ll;
@@ -110,6 +111,29 @@ void testBeautifulTriplets() {
     int d = 3;
 
     cout << "there are: " << beautifulTriplets(d, arr) << "Beautiful Triplets" << endl;
+}
+
+void testMatrixMultiplier() {
+    std::vector<std::vector<int>> A = {
+          {1, 2, 3},
+          {4, 5, 6}
+    };
+
+    std::vector<std::vector<int>> B = {
+        {7, 8},
+        {9, 10},
+        {11, 12}
+    };
+
+    std::vector<std::vector<int>> result = MatrixMultiplier::multiply(A, B);
+
+    std::cout << "Resulting Matrix C:\n";
+    for (const auto& row : result) {
+        for (int value : row) {
+            std::cout << value << " ";
+        }
+        std::cout << "\n";
+    }
 }
 
 void testPrimeCalculator() {
@@ -236,6 +260,7 @@ void SinglyList::Print() {
     cout << "null\n";
 }
 
+
 // ---------------------------- MAIN ----------------------------
 int main() {
 
@@ -261,6 +286,9 @@ int main() {
 
     // Prime Calculator
     testPrimeCalculator();
+
+    // Matrix Multiplier
+    testMatrixMultiplier();
 
     return 0;
 }

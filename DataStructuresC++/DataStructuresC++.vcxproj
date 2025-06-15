@@ -129,10 +129,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\DataStructuresC++.cpp" />
+    <ClCompile Include="src\MatrixMultiplier.cpp" />
     <ClCompile Include="src\PrimeCalculator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Headers.h" />
+    <ClInclude Include="inc\MatrixMultiplier.h" />
     <ClInclude Include="inc\PrimeCalculator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

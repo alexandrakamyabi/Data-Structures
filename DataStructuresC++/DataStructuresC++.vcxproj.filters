@@ -27,12 +27,18 @@
     <ClCompile Include="src\PrimeCalculator.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\MatrixMultiplier.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Headers.h">
       <Filter>Source Files\inc</Filter>
     </ClInclude>
     <ClInclude Include="inc\PrimeCalculator.h">
+      <Filter>Source Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MatrixMultiplier.h">
       <Filter>Source Files\inc</Filter>
     </ClInclude>
   </ItemGroup>
