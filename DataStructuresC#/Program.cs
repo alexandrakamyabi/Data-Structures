@@ -77,7 +77,31 @@ class Program
 
         Console.WriteLine("Will class run: " + result1);
         Console.WriteLine("Will class run: " + result2);
-}
+
+        // ---------------- Matrix Multiplier ----------------
+        int[,] matrixA = {
+            { 1, 2, 3 },
+            { 4, 5, 6 }
+        };
+
+        int[,] matrixB = {
+            { 7, 8 },
+            { 9, 10 },
+            { 11, 12 }
+        };
+
+        int[,] C = MatrixMultiplier.Multiply(matrixA, matrixB);
+
+        Console.WriteLine("Resulting Matrix C:");
+        for (int i = 0; i < C.GetLength(0); i++)
+        {
+            for (int j = 0; j < C.GetLength(1); j++)
+            {
+                Console.Write(C[i, j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
 
     /// <summary>
     /// Caesar cipher encryption: shifts each letter by a given offset.
@@ -142,6 +166,7 @@ public class BinaryTreeInorderTraversal
         result.Add(node.val);
         InorderTraversal(node.right, result);
     }
+
 }
 
 /// <summary>
@@ -217,6 +242,39 @@ public class Professor
             if (onTime >= k) return "No";
         }
         return "Yes";
+    }
+}
+/// <summary>
+/// Multithreaded matrix multiplication
+/// </summary>
+public class MatrixMultiplier
+{
+    public static int[,] Multiply(int[,] A, int[,] B)
+    {
+        int N = A.GetLength(0);
+        int M = A.GetLength(1);
+        int P = B.GetLength(1);
+        int[,] C = new int[N, P];
+
+        List<Task> tasks = new List<Task>();
+
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < P; j++)
+            {
+                int row = i, col = j;
+                tasks.Add(Task.Run(() =>
+                {
+                    int sum = 0;
+                    for (int k = 0; k < M; k++)
+                        sum += A[row, k] * B[k, col];
+                    C[row, col] = sum;
+                }));
+            }
+        }
+
+        Task.WaitAll(tasks.ToArray());
+        return C;
     }
 }
 public class Solution
