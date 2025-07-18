@@ -1,4 +1,3 @@
-
 #include <Headers.h>
 #include "PrimeCalculator.h"
 #include "MatrixMultiplier.h"
@@ -14,10 +13,12 @@ T myMin(T a, T b) {
     return (a < b) ? a : b;
 }
 
+
 template <typename T>
 T myMax(T a, T b) {
     return (a > b) ? a : b;
 }
+
 
 template <typename T>
 class Calculator {
@@ -28,7 +29,10 @@ public:
     T operator*(const Calculator& other) { return value * other.value; }
 };
 
+
 // ---------------------------- FUNCTIONS ----------------------------
+
+
 bool hasZeroSumSubarray(int nums[], int n) {
     unordered_set<int> set;
     set.insert(0);
@@ -40,6 +44,8 @@ bool hasZeroSumSubarray(int nums[], int n) {
     }
     return false;
 }
+
+
 string angryProfessor(int k, const vector<int>& a) {
     int onTimeCount = 0;
     for (int arrival : a) {
@@ -49,10 +55,13 @@ string angryProfessor(int k, const vector<int>& a) {
     }
     return "Yes";
 }
+
+
 void testAngryProfessor() {
     cout << angryProfessor(3, {-1, -3, 4, 2}) << endl;
     cout << angryProfessor(2, { 0, -1, 2, 1 }) << endl;
 }
+
 
 string caesarCipher(string s, int k) {
     k = k % 26;
@@ -67,12 +76,15 @@ string caesarCipher(string s, int k) {
     return result;
 }
 
+
 string catAndMouse(int x, int y, int z) {
     int distA = abs(x - z), distB = abs(y - z);
     if (distA < distB) return "Cat A";
     else if (distB < distA) return "Cat B";
     else return "Mouse C";
 }
+
+
 int howManyGames(int p, int d, int m, int s) {
     int gamesBought = 0;
     int currentPrice = p;
@@ -85,15 +97,19 @@ int howManyGames(int p, int d, int m, int s) {
 
     return gamesBought;
 }
+
+
 void update(int* a, int* b) {
     int tempA = *a, tempB = *b;
     *a = tempA + tempB;
     *b = abs(tempA - tempB);
 }
 
+
 int towerBreakers(int n, int m) {
     return (m == 1 || m % 2 == 0) ? 2 : 1;
 }
+
 
 int beautifulTriplets(int d, vector<int> arr) {
     unordered_set<int> elements(arr.begin(), arr.end());
@@ -106,12 +122,14 @@ int beautifulTriplets(int d, vector<int> arr) {
     return count;
 }
 
+
 void testBeautifulTriplets() {
     vector<int> arr = { 1, 2, 4, 5, 7, 8, 10 };
     int d = 3;
 
     cout << "there are: " << beautifulTriplets(d, arr) << "Beautiful Triplets" << endl;
 }
+
 
 void testMatrixMultiplier() {
     std::vector<std::vector<int>> A = {
@@ -136,6 +154,7 @@ void testMatrixMultiplier() {
     }
 }
 
+
 void testPrimeCalculator() {
     long long limit;
     int threads;
@@ -145,6 +164,7 @@ void testPrimeCalculator() {
     std::cin >> threads;
     runPrimeThreaded(limit, threads);
 }
+
 
 vector<double> SlidingWindowMedian(const vector<int>& num, int windowSize) {
     vector<double> medians;
@@ -161,12 +181,14 @@ vector<double> SlidingWindowMedian(const vector<int>& num, int windowSize) {
     return medians;
 }
 
+
 struct TreeNode {
     char Value;
     TreeNode* Left;
     TreeNode* Right;
     TreeNode(char value) : Value(value), Left(nullptr), Right(nullptr) {}
 };
+
 
 class Solution {
 public:
@@ -179,6 +201,7 @@ public:
     }
 };
 
+
 class Student {
 public:
     string Name;
@@ -189,6 +212,7 @@ public:
     }
     void Print() const { cout << Name << " (" << StudentId << ")"; }
 };
+
 
 class SinglyList {
 private:
@@ -207,6 +231,7 @@ public:
     void Print();
 };
 
+
 void SinglyList::Add(const Student& s) {
     Node* newNode = new Node(s);
     if (!head) head = newNode;
@@ -216,6 +241,7 @@ void SinglyList::Add(const Student& s) {
         curr->next = newNode;
     }
 }
+
 
 void SinglyList::Add(const Student& s, int index) {
     if (index < 0) return;
@@ -228,6 +254,7 @@ void SinglyList::Add(const Student& s, int index) {
     curr->next = newNode;
 }
 
+
 void SinglyList::Remove(int index) {
     if (index < 0 || !head) return;
     if (index == 0) { Node* temp = head; head = head->next; delete temp; return; }
@@ -237,6 +264,7 @@ void SinglyList::Remove(int index) {
     if (temp) { curr->next = temp->next; delete temp; }
 }
 
+
 void SinglyList::Remove(const Student& s) {
     if (!head) return;
     if (head->data == s) { Node* temp = head; head = head->next; delete temp; return; }
@@ -244,6 +272,7 @@ void SinglyList::Remove(const Student& s) {
     while (curr->next && !(curr->next->data == s)) curr = curr->next;
     if (curr->next) { Node* temp = curr->next; curr->next = temp->next; delete temp; }
 }
+
 
 void SinglyList::PopBack() {
     if (!head) return;
@@ -254,6 +283,7 @@ void SinglyList::PopBack() {
     curr->next = nullptr;
 }
 
+
 void SinglyList::Print() {
     Node* curr = head;
     while (curr) { curr->data.Print(); cout << " -> "; curr = curr->next; }
@@ -262,6 +292,8 @@ void SinglyList::Print() {
 
 
 // ---------------------------- MAIN ----------------------------
+
+
 int main() {
 
 
