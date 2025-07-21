@@ -5,6 +5,7 @@ using System.Collections.Generic;
 /// Main entry point for running multiple algorithm, data structure demos and HackerRank/LeetCode problems.
 /// Simulates a C++ style `main()` structure in C#.
 /// </summary>
+
 class Program
 {
     static void Main()
@@ -103,6 +104,7 @@ class Program
         }
     }
 
+
     /// <summary>
     /// Caesar cipher encryption: shifts each letter by a given offset.
     /// Non alphabet characters remain unchanged.
@@ -110,6 +112,8 @@ class Program
     /// <param name="s">Original string</param>
     /// <param name="k">Shift amount</param>
     /// <returns>Encrypted string</returns>
+
+
     static string CaesarCipher(string s, int k)
     {
         k %= 26;
@@ -129,9 +133,13 @@ class Program
         return new string(result);
     }
 }
+
+
 /// <summary>
 /// Binary tree node structure for integers.
 /// </summary>
+
+
 public class NewTreeNode
 {
     public int val;
@@ -141,9 +149,12 @@ public class NewTreeNode
     public NewTreeNode(int x) => val = x;
 }
 
+
 /// <summary>
 /// Performs recursive inorder traversal on a binary tree of integers.
 /// </summary>
+
+
 public class BinaryTreeInorderTraversal
 {
     /// <summary>
@@ -169,9 +180,12 @@ public class BinaryTreeInorderTraversal
 
 }
 
+
 /// <summary>
 /// Node structure for character based binary trees.
 /// </summary>
+
+
 public class TreeNode
 {
     public char value;
@@ -185,6 +199,7 @@ public class TreeNode
     }
 }
 
+
 /// <summary>
 /// Determines which cat will catch the mouse first or if the mouse escapes.
 /// </summary>
@@ -192,6 +207,8 @@ public class TreeNode
 /// <param name="catB">Position of Cat B</param>
 /// <param name="mouse">Position of the Mouse</param>
 /// <returns>"Cat A", "Cat B", or "Mouse C"</returns>
+
+
 public class CatAndMouseSolver
 {
     public string GetWinner(int catA, int catB, int mouse)
@@ -207,10 +224,14 @@ public class CatAndMouseSolver
             return "Mouse C";
     }
 }
+
+
 /// <summary>
 /// Given an increasing sequenc of integers and the value of d
 /// count the number of beautiful triplets in the sequence.
 /// </summary>
+
+
 public class BeautifulTriplets
 {
     public int CountBeautifulTriplets(int d, List<int> arr)
@@ -227,10 +248,14 @@ public class BeautifulTriplets
         return count;
     }
 }
+
+
 /// <summary>
 /// Given an increasing sequenc of integers and the value of d
 /// count the number of beautiful triplets in the sequence.
 /// </summary>
+
+
 public class Professor
 {
     public string AngryProfessor(int k, List<int> a)
@@ -244,9 +269,13 @@ public class Professor
         return "Yes";
     }
 }
+
+
 /// <summary>
 /// Multithreaded matrix multiplication
 /// </summary>
+
+
 public class MatrixMultiplier
 {
     public static int[,] Multiply(int[,] A, int[,] B)
@@ -277,11 +306,52 @@ public class MatrixMultiplier
         return C;
     }
 }
+
+
+/// <summary>
+/// returns the minimal cost to convert a 3x3 matrix into a magic square
+/// </summary>
+
+
+public class MagicSquare
+{
+    public static int FormingMagicSquare(int[][] s)
+    {
+        int[][][] magicSquares = new int[][][]
+        {
+        new int[][] { new[] {8,1,6}, new[] {3,5,7}, new[] {4,9,2} },
+        new int[][] { new[] {6,1,8}, new[] {7,5,3}, new[] {2,9,4} },
+        new int[][] { new[] {4,9,2}, new[] {3,5,7}, new[] {8,1,6} },
+        new int[][] { new[] {2,9,4}, new[] {7,5,3}, new[] {6,1,8} },
+        new int[][] { new[] {8,3,4}, new[] {1,5,9}, new[] {6,7,2} },
+        new int[][] { new[] {4,3,8}, new[] {9,5,1}, new[] {2,7,6} },
+        new int[][] { new[] {6,7,2}, new[] {1,5,9}, new[] {8,3,4} },
+        new int[][] { new[] {2,7,6}, new[] {9,5,1}, new[] {4,3,8} }
+        };
+
+        int minCost = int.MaxValue;
+
+        foreach (var magic in magicSquares)
+        {
+            int cost = 0;
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 3; j++)
+                    cost += Math.Abs(s[i][j] - magic[i][j]);
+            minCost = Math.Min(minCost, cost);
+        }
+
+        return minCost;
+    }
+}
+
+
 public class Solution
 {
+
     /// <summary>
     /// Finds the Lowest Common Ancestor (LCA) of two nodes in a binary tree.
     /// </summary>
+    
     public static TreeNode FindLCA(TreeNode root, TreeNode p, TreeNode q)
     {
         if (root == null || root == p || root == q) return root;
@@ -293,6 +363,7 @@ public class Solution
     /// <summary>
     /// Computes median values for all sliding windows of a fixed size in the array.
     /// </summary>
+   
     public static List<double> SlidingWindowMedian(int[] nums, int windowSize)
     {
         var medians = new List<double>();
@@ -318,6 +389,7 @@ public class Solution
     /// <summary>
     /// Merges two sorted arrays in place into array A.
     /// </summary>
+    
     public void MergeSortedArrays(int[] A, int m, int[] b, int n)
     {
         int i = m - 1, j = n - 1, k = m + n - 1;
