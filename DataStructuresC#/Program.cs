@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 /// <summary>
 /// Main entry point for running multiple algorithm, data structure demos and HackerRank/LeetCode problems.
@@ -30,7 +31,7 @@ class Program
         int[] nums = { 1, 2, 3, 4, 5 };
         List<double> medians = Solution.SlidingWindowMedian(nums, 3);
         Console.WriteLine("Sliding Window Medians: " + string.Join(", ", medians));
-
+        
         // ---------------- Merge Sorted Arrays ----------------
         int[] A = { 1, 2, 3, 0, 0, 0 };
         int[] B = { 2, 5, 6 };
@@ -44,11 +45,10 @@ class Program
         TreeNode rootLCA = new TreeNode('B') { Left = a, Right = b };
         TreeNode lca = Solution.FindLCA(rootLCA, a, b);
         Console.WriteLine("LCA of D and E: " + lca.value);
+        
         // ---------------- Which cat will catch the mouse first? ----------------
         var solver = new CatAndMouseSolver();
-
         int queries = int.Parse(Console.ReadLine());
-
         for (int i = 0; i < queries; i++)
         {
             var parts = Console.ReadLine().Split();
@@ -58,6 +58,7 @@ class Program
 
             Console.WriteLine(solver.GetWinner(x, y, z));
         }
+
         // ---------------- How many beautiful triplets? ----------------
         var inputs = Console.ReadLine().Split();
         int n = int.Parse(inputs[0]);
@@ -102,6 +103,14 @@ class Program
             }
             Console.WriteLine();
         }
+
+        // ---------------- Climbing Leaderboard ----------------
+        List<int> ranked = new List<int> { 100, 100, 50, 40, 40, 20, 10 };
+        List<int> player = new List<int> { 5, 25, 50, 120 };
+
+        List<int> result = Leaderboard.CLimbingLeaderboard(ranked, player);
+
+        Console.WriteLine("Player ranks: " + string.Join(" ", result));
     }
 
 
@@ -341,6 +350,40 @@ public class MagicSquare
         }
 
         return minCost;
+    }
+}
+
+
+/// <summary>
+/// determines the player's rank after each new score using dense ranking.
+/// removes duplicates from leaderboard, then compares each player score
+/// from lowest to highest using reverse scan.
+/// </summary>
+
+
+public class Leaderboard
+{
+    public static List <int> CLimbingLeaderboard(List<int> ranked, List<int> player)
+    {
+        List<int> result = new List<int>();
+        List<int> unique = new List<int>();
+        unique.Add(ranked[0]);
+        for (int i = 1; i < ranked.Count; i++)
+        {
+            if (ranked[i] != ranked[i - 1])
+                unique.Add(ranked[i]);
+        }
+
+        int index = unique.Count - 1;
+
+        foreach (int score in player)
+        {
+            while (index >= 0 && score >= unique[index])
+                index--;
+            result.Add(index + 2);
+        }
+
+        return result;
     }
 }
 

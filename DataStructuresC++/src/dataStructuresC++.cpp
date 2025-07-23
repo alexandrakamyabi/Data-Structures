@@ -312,6 +312,42 @@ void SinglyList::Remove(const Student& s) {
 }
 
 
+vector<int> climbingLeaderboard(vector<int> ranked, vector<int> player) {
+    vector<int> result;
+    // remove duplicates and sort descending
+    vector<int> unique;
+    unique.push_back(ranked[0]);
+    for (int i = 1; i < ranked.size(); ++i) {
+        if (ranked[i] != ranked[i - 1])
+            unique.push_back(ranked[i]);
+    }
+
+    int index = unique.size() - 1;
+
+    for (int score : player) {
+        while (index >= 0 && score >= unique[index])
+            --index;
+        result.push_back(index + 2); // rank is index + 1, adding 1 more for 1-based
+    }
+
+    return result;
+}
+
+
+void testClimbingLeaderboard() {
+    vector<int> ranked = { 100, 100, 50, 40, 40, 20, 10 };
+    vector<int> player = { 5, 25, 50, 120 };
+
+    vector<int> result = climbingLeaderboard(ranked, player);
+
+    cout << "player ranks: ";
+    for (int rank : result) {
+        cout << rank << " ";
+    }
+    cout << endl;
+}
+
+
 void SinglyList::PopBack() {
     if (!head) return;
     if (!head->next) { delete head; head = nullptr; return; }
@@ -362,6 +398,9 @@ int main() {
 
     // Magic Square
     testFormingMagicSquare();
+
+    //Climbing Leaderboard
+    testClimbingLeaderboard();
 
     return 0;
 }
