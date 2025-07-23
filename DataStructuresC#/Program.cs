@@ -111,19 +111,42 @@ class Program
         List<int> result = Leaderboard.CLimbingLeaderboard(ranked, player);
 
         Console.WriteLine("Player ranks: " + string.Join(" ", result));
-    }
+
+        // ---------------- Queens Attack ----------------
+        // Test 1
+        int n1 = 4, k1 = 0, r_q1 = 4, c_q1 = 4;
+        List<List<int>> obs1 = new();
+        Console.WriteLine("Test 1: " + (QueensAttack.QueensAttackChess(n1, k1, r_q1, c_q1, obs1) == 9 ? "Passed" : "Failed"));
+
+        // Test 2
+        int n2 = 5, k2 = 3, r_q2 = 4, c_q2 = 3;
+        List<List<int>> obs2 = new()
+    {
+        new List<int>{5, 5},
+        new List<int>{4, 2},
+        new List<int>{2, 3}
+    };
+        Console.WriteLine("Test 2: " + (QueensAttack.QueensAttackChess(n2, k2, r_q2, c_q2, obs2) == 10 ? "Passed" : "Failed"));
+
+        // Test 3
+        int n3 = 1, k3 = 0, r_q3 = 1, c_q3 = 1;
+        List<List<int>> obs3 = new();
+        Console.WriteLine("Test 3: " + (QueensAttack.QueensAttackChess(n3, k3, r_q3, c_q3, obs3) == 0 ? "Passed" : "Failed"));
+    
+
+}
 
 
-    /// <summary>
-    /// Caesar cipher encryption: shifts each letter by a given offset.
-    /// Non alphabet characters remain unchanged.
-    /// </summary>
-    /// <param name="s">Original string</param>
-    /// <param name="k">Shift amount</param>
-    /// <returns>Encrypted string</returns>
+/// <summary>
+/// Caesar cipher encryption: shifts each letter by a given offset.
+/// Non alphabet characters remain unchanged.
+/// </summary>
+/// <param name="s">Original string</param>
+/// <param name="k">Shift amount</param>
+/// <returns>Encrypted string</returns>
 
 
-    static string CaesarCipher(string s, int k)
+static string CaesarCipher(string s, int k)
     {
         k %= 26;
         char[] result = new char[s.Length];
@@ -384,6 +407,50 @@ public class Leaderboard
         }
 
         return result;
+    }
+}
+
+
+/// <summary>
+/// This class calculates how many squares a queen can attack on an 
+/// n × n chessboard, considering obstacles that block her movement in any of the 
+/// 8 directions (up, down, left, right, and diagonals). It loops through each direction and
+/// counts how far the queen can move until she hits the board edge or an obstacle.
+/// </summary>
+
+
+public class QueensAttack
+{
+    public static int QueensAttackChess(int n, int k, int r_q, int c_q, List<List<int>> obstacles)
+    {
+        HashSet<string> obs = new HashSet<string>();
+        foreach (var o in obstacles)
+            obs.Add($"{o[0]},{o[1]}");
+
+        int[,] directions = {
+        {-1,  0}, // up
+        { 1,  0}, // down
+        { 0, -1}, // left
+        { 0,  1}, // right
+        {-1, -1}, // up-left
+        {-1,  1}, // up-right
+        { 1, -1}, // down-left
+        { 1,  1}  // down-right
+    };
+
+        int count = 0;
+        for (int i = 0; i < 8; i++)
+        {
+            int r = r_q + directions[i, 0];
+            int c = c_q + directions[i, 1];
+            while (r >= 1 && r <= n && c >= 1 && c <= n && !obs.Contains($"{r},{c}"))
+            {
+                count++;
+                r += directions[i, 0];
+                c += directions[i, 1];
+            }
+        }
+        return count;
     }
 }
 

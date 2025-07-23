@@ -358,6 +358,54 @@ void SinglyList::PopBack() {
 }
 
 
+int queensAttack(int n, int k, int r_q, int c_q, vector<vector<int>> obstacles) {
+    unordered_set<string> obs;
+    for (auto& o : obstacles) {
+        obs.insert(to_string(o[0]) + "," + to_string(o[1]));
+    }
+    int directions[8][2] = {
+        {-1,  0}, // up
+        { 1,  0}, // down
+        { 0, -1}, // left
+        { 0,  1}, // right
+        {-1, -1}, // up-left
+        {-1,  1}, // up-right
+        { 1, -1}, // down-left
+        { 1,  1}  // down-right
+    };
+
+    int count = 0;
+    for (auto& dir : directions) {
+        int r = r_q + dir[0];
+        int c = c_q + dir[1];
+        while (r >= 1 && r <= n && c >= 1 && c <= n && !obs.count(to_string(r))) {
+            ++count;
+            r += dir[0];
+            c += dir[1];
+        }
+    }
+    return count;
+}
+
+
+void testQueensAttack() {
+    // Test 1
+    int n1 = 4, k1 = 0, r_q1 = 4, c_q1 = 4;
+    vector<vector<int>> obs1 = {};
+    cout << "Test 1: " << (queensAttack(n1, k1, r_q1, c_q1, obs1) == 9 ? "Passed" : "Failed") << endl;
+
+    // Test 2
+    int n2 = 5, k2 = 3, r_q2 = 4, c_q2 = 3;
+    vector<vector<int>> obs2 = { {5, 5}, {4, 2}, {2, 3} };
+    cout << "Test 2: " << (queensAttack(n2, k2, r_q2, c_q2, obs2) == 10 ? "Passed" : "Failed") << endl;
+
+    // Test 3
+    int n3 = 1, k3 = 0, r_q3 = 1, c_q3 = 1;
+    vector<vector<int>> obs3 = {};
+    cout << "Test 3: " << (queensAttack(n3, k3, r_q3, c_q3, obs3) == 0 ? "Passed" : "Failed") << endl;
+}
+
+
 void SinglyList::Print() {
     Node* curr = head;
     while (curr) { curr->data.Print(); cout << " -> "; curr = curr->next; }
@@ -401,6 +449,9 @@ int main() {
 
     //Climbing Leaderboard
     testClimbingLeaderboard();
+
+    //Queen's Attack
+    testQueensAttack();
 
     return 0;
 }
