@@ -220,6 +220,48 @@ vector<double> SlidingWindowMedian(const vector<int>& num, int windowSize) {
 }
 
 
+string encryption(string s) {
+    // remove all spaces from input
+    s.erase(remove(s.begin(), s.end(), ' '), s.end());
+    int len = s.length();
+
+    // compute grid dimensions
+    int rows = floor(sqrt(len));
+    int cols = ceil(sqrt(len));
+    if (rows * cols < len) rows++; // ensure grid can hold all chars
+
+    string result;
+    for (int c = 0; c < cols; ++c) {
+        for (int r = 0; r < rows; ++r) {
+            int idx = r * cols + c;
+            if (idx < len)
+                result += s[idx];
+        }
+        result += ' ';
+    }
+
+    result.pop_back(); // remove trailing space
+    return result;
+}
+
+
+void testEncryption() {
+    vector<pair<string, string>> tests = {
+        {"haveaniceday", "hae and via ecy"},
+        {"feedthedog", "fto ehg ee dd"},
+        {"chillout", "clu hlt io"},
+        {"iffactsdontfittotheorychangethefacts", "isieae fdtonf fotrga anoyec cttctt tfhhhs"}
+    };
+
+    for (const auto& [input, expected] : tests) {
+        string output = encryption(input);
+        cout << "input: \"" << input << "\"\nexpected: \"" << expected << "\"\noutput:   \"" << output << "\"\n\n";
+        assert(output == expected);
+    }
+
+    cout << "all tests passed!\n";
+}
+
 struct TreeNode {
     char Value;
     TreeNode* Left;
@@ -452,6 +494,9 @@ int main() {
 
     //Queen's Attack
     testQueensAttack();
+
+    //Encryption
+    testEncryption();
 
     return 0;
 }

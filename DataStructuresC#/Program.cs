@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Numerics;
 
 /// <summary>
@@ -132,9 +133,25 @@ class Program
         int n3 = 1, k3 = 0, r_q3 = 1, c_q3 = 1;
         List<List<int>> obs3 = new();
         Console.WriteLine("Test 3: " + (QueensAttack.QueensAttackChess(n3, k3, r_q3, c_q3, obs3) == 0 ? "Passed" : "Failed"));
-    
 
-}
+        var tests = new Dictionary<string, string>
+    {
+        { "haveaniceday", "hae and via ecy" },
+        { "feedthedog", "fto ehg ee dd" },
+        { "chillout", "clu hlt io" },
+        { "iffactsdontfittotheorychangethefacts", "isieae fdtonf fotrga anoyec cttctt tfhhhs" }
+    };
+
+        // ---------------- Encryption ----------------
+        foreach (var test in tests)
+        {
+            string output = Encryption.TextEncryption(test.Key);
+            Console.WriteLine($"Input: \"{test.Key}\"\nExpected: \"{test.Value}\"\nOutput:   \"{output}\"\n");
+            Debug.Assert(output == test.Value);
+        }
+
+        Console.WriteLine("All tests passed!");
+    }
 
 
 /// <summary>
@@ -455,6 +472,40 @@ public class QueensAttack
 }
 
 
+/// <summary>
+/// removes spaces from the input.
+/// computes rows and columns using the square root of the length.
+/// fills a virtual grid row wise.
+/// reads column wise to build the encrypted message.
+
+
+public class Encryption
+{
+    public static string TextEncryption (string s)
+    {
+        s.Replace(" ", "");
+        int len = s.Length;
+
+        int rows = (int)Math.Floor(Math.Sqrt(len));
+        int cols = (int)Math.Ceiling(Math.Sqrt(len));
+        if (rows * cols < len) rows++;
+
+        List<string> result = new List<string>();
+        for (int c = 0; c < cols; c++)
+        {
+            string word = "";
+            for (int r = 0; r < rows; r++)
+            {
+                int idx = r * cols + c;
+                if (idx < len)
+                    word += s[idx];
+            }
+            result.Add(word);
+        }
+
+        return string.Join(" ", result);
+    }
+}
 public class Solution
 {
 
