@@ -68,7 +68,7 @@
               "RelativeDocumentMoniker": "src\\DataStructuresC\u002B\u002B.cpp",
               "ToolTip": "D:\\DataStructuresStudies\\DataStructuresC\u002B\u002B\\src\\DataStructuresC\u002B\u002B.cpp",
               "RelativeToolTip": "src\\DataStructuresC\u002B\u002B.cpp",
-              "ViewState": "AgIAAHMBAAAAAAAAAAAAAPIBAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAPUBAAAAAAAAAAAYwCcCAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-06-07T00:06:37.593Z",
               "EditorCaption": ""
@@ -83,8 +83,7 @@
               "RelativeToolTip": "inc\\PrimeCalculator.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-06-07T00:04:40.808Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-07T00:04:40.808Z"
             },
             {
               "$type": "Document",
@@ -96,8 +95,7 @@
               "RelativeToolTip": "src\\PrimeCalculator.cpp",
               "ViewState": "AgIAABwAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-06-07T00:03:50.698Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-07T00:03:50.698Z"
             },
             {
               "$type": "Document",
@@ -109,8 +107,7 @@
               "RelativeToolTip": "inc\\Headers.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-06-07T00:02:50.487Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-07T00:02:50.487Z"
             }
           ]
         }

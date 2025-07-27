@@ -262,6 +262,10 @@ void testEncryption() {
     cout << "all tests passed!\n";
 }
 
+
+// ---------------------------- CLASS STRUCTURES ----------------------------
+
+
 struct TreeNode {
     char Value;
     TreeNode* Left;
@@ -293,6 +297,54 @@ public:
     void Print() const { cout << Name << " (" << StudentId << ")"; }
 };
 
+
+class NonDivisibleSubsetSolver {
+private:
+    int k;
+    vector<int> elements;
+
+public:
+    NonDivisibleSubsetSolver(int divisor, const vector<int>& s)
+        : k(divisor), elements(s) {
+    }
+
+    int getMaxSubsetSize() {
+        vector<int> remainderCount(k, 0);
+
+        for (int num : elements) {
+            remainderCount[num % k]++;
+        }
+
+        int result = min(remainderCount[0], 1);
+
+        for (int r = 1; r <= k / 2; r++) {
+            if (r == k - r) {
+                // For k even
+                result += 1;
+            }
+            else {
+                result += max(remainderCount[r], remainderCount[k - r]);
+            }
+        }
+
+        return result;
+    }
+};
+
+int nonDivisibleSubset(int k, vector<int> s) {
+    NonDivisibleSubsetSolver solver(k, s);
+    return solver.getMaxSubsetSize();
+}
+
+void testNonDivisibleSubset() {
+    int n, k;
+    cin >> n >> k;
+    vector<int> s(n);
+    for (int i = 0; i < n; i++) cin >> s[i];
+
+    cout << nonDivisibleSubset(k, s) << endl;
+
+}
 
 class SinglyList {
 private:
@@ -497,6 +549,9 @@ int main() {
 
     //Encryption
     testEncryption();
+    
+    //Divisible Subset
+    testNonDivisibleSubset();
 
     return 0;
 }
