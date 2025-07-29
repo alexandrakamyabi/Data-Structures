@@ -66,8 +66,8 @@ class Program
         int d = int.Parse(inputs[1]);
 
         var arr = new List<int>();
-        foreach (var s in Console.ReadLine().Split())
-            arr.Add(int.Parse(s));
+        foreach (var v in Console.ReadLine().Split())
+            arr.Add(int.Parse(v));
 
         var solve = new BeautifulTriplets();
         Console.WriteLine(solve.CountBeautifulTriplets(d, arr));
@@ -151,6 +151,21 @@ class Program
         }
 
         Console.WriteLine("All tests passed!");
+
+
+        string[] input = Console.ReadLine().Split(' ');
+        int l = int.Parse(input[0]);
+        int k = int.Parse(input[1]);
+        string[] elements = Console.ReadLine().Split(' ');
+        List<int> s = new List<int>();
+
+        for (int i = 0; i < l; i++)
+        {
+            s.Add(int.Parse(elements[i]));
+        }
+
+        NonDivisibleSubsetSolver subsetSolver = new NonDivisibleSubsetSolver(k, s);
+        Console.WriteLine(subsetSolver.GetMaxSubsetSize());
     }
 
 
@@ -506,6 +521,54 @@ public class Encryption
         return string.Join(" ", result);
     }
 }
+
+
+/// <summary>
+/// given a list of distinct integers and a divisor k,
+/// find the size of the largest subset such that no two
+/// numbers in the subset add up to a multiple of k.
+/// </summary>
+
+
+class NonDivisibleSubsetSolver
+{
+    private int k;
+    private List<int> elements;
+
+    public NonDivisibleSubsetSolver(int divisor, List<int> s)
+    {
+        k = divisor;
+        elements = s;
+    }
+
+    public int GetMaxSubsetSize()
+    {
+        int[] remainderCount = new int[k];
+
+        foreach (int num in elements)
+        {
+            remainderCount[num % k]++;
+        }
+
+        int result = Math.Min(remainderCount[0], 1);
+
+        for (int r = 1; r <= k / 2; r++)
+        {
+            if (r == k - r)
+            {
+                result += 1; // k even
+            }
+            else
+            {
+                result += Math.Max(remainderCount[r], remainderCount[k - r]);
+            }
+        }
+
+        return result;
+    }
+}
+
+
 public class Solution
 {
 
