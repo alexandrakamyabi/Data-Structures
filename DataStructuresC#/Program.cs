@@ -166,19 +166,23 @@ class Program
 
         NonDivisibleSubsetSolver subsetSolver = new NonDivisibleSubsetSolver(k, s);
         Console.WriteLine(subsetSolver.GetMaxSubsetSize());
+
+        // ---------------- Ball Organizer ----------------
+
+        sol.TestBallOrganizer();
     }
 
 
-/// <summary>
-/// Caesar cipher encryption: shifts each letter by a given offset.
-/// Non alphabet characters remain unchanged.
-/// </summary>
-/// <param name="s">Original string</param>
-/// <param name="k">Shift amount</param>
-/// <returns>Encrypted string</returns>
+    /// <summary>
+    /// Caesar cipher encryption: shifts each letter by a given offset.
+    /// Non alphabet characters remain unchanged.
+    /// </summary>
+    /// <param name="s">Original string</param>
+    /// <param name="k">Shift amount</param>
+    /// <returns>Encrypted string</returns>
 
 
-static string CaesarCipher(string s, int k)
+    static string CaesarCipher(string s, int k)
     {
         k %= 26;
         char[] result = new char[s.Length];
@@ -530,7 +534,7 @@ public class Encryption
 /// </summary>
 
 
-class NonDivisibleSubsetSolver
+public class NonDivisibleSubsetSolver
 {
     private int k;
     private List<int> elements;
@@ -569,13 +573,44 @@ class NonDivisibleSubsetSolver
 }
 
 
+/// <summary>
+/// Checks if it's possible to sort containers so that each type of ball is in its own container.
+/// </summary>
+
+
+public class BallOrganizer
+{
+    public static string CheckPossibility(int[][] containers)
+    {
+        int n = containers.Length;
+        long[] containerCap = new long[n];
+        long[] typeCount = new long[n];
+
+        // O(n^2): Compute row and column sums
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+            {
+                containerCap[i] += containers[i][j];
+                typeCount[j] += containers[i][j];
+            }
+
+        Array.Sort(containerCap);
+        Array.Sort(typeCount);
+
+        return containerCap.SequenceEqual(typeCount) ? "Possible" : "Impossible";
+    }
+
+}
+
+
+
 public class Solution
 {
 
     /// <summary>
     /// Finds the Lowest Common Ancestor (LCA) of two nodes in a binary tree.
     /// </summary>
-    
+
     public static TreeNode FindLCA(TreeNode root, TreeNode p, TreeNode q)
     {
         if (root == null || root == p || root == q) return root;
@@ -587,7 +622,7 @@ public class Solution
     /// <summary>
     /// Computes median values for all sliding windows of a fixed size in the array.
     /// </summary>
-   
+
     public static List<double> SlidingWindowMedian(int[] nums, int windowSize)
     {
         var medians = new List<double>();
@@ -613,7 +648,7 @@ public class Solution
     /// <summary>
     /// Merges two sorted arrays in place into array A.
     /// </summary>
-    
+
     public void MergeSortedArrays(int[] A, int m, int[] b, int n)
     {
         int i = m - 1, j = n - 1, k = m + n - 1;
@@ -624,5 +659,21 @@ public class Solution
             else
                 A[k--] = b[j--];
         }
+    }
+    public void TestBallOrganizer()
+    {
+        int q = int.Parse(Console.ReadLine());
+
+        for (int t = 0; t < q; t++)
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[][] containers = new int[n][];
+
+            for (int i = 0; i < n; i++)
+                containers[i] = Console.ReadLine().Split().Select(int.Parse).ToArray();
+
+            Console.WriteLine(BallOrganizer.CheckPossibility(containers));
+        }
+
     }
 }

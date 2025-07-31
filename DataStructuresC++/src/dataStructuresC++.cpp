@@ -7,6 +7,7 @@ typedef long long ll;
 typedef unsigned long long ull;
 typedef pair<int, int> ii;
 
+
 // ---------------------------- TEMPLATES ----------------------------
 template <typename T>
 T myMin(T a, T b) {
@@ -331,10 +332,50 @@ public:
     }
 };
 
+
+class BallOrganizer {
+public:
+    static string checkPossibility(const vector<vector<int>>& containers) {
+        int n = containers.size();
+        vector<long long> containerCap(n, 0);
+        vector<long long> typeCount(n, 0);
+
+        for (int i = 0; i < n; ++i)
+            for (int j = 0; j < n; ++j) {
+                containerCap[i] += containers[i][j];
+                typeCount[j] += containers[i][j];
+            }
+        sort(containerCap.begin(), containerCap.end());
+        sort(typeCount.begin(), typeCount.end());
+
+        return containerCap == typeCount ? "possible" : "impossible";
+    
+    }
+};
+
+
+void testBallOrganizer() {
+    int q;
+    cin >> q;
+
+    while (q--) {
+        int n;
+        cin >> n;
+        vector<vector<int>> containers(n, vector<int>(n));
+
+        for (int i = 0; i < n; ++i)
+            for (int j = 0; j < n; ++j)
+                cin >> containers[i][j];
+        cout << BallOrganizer::checkPossibility(containers) << '\n';
+    }
+}
+
+
 int nonDivisibleSubset(int k, vector<int> s) {
     NonDivisibleSubsetSolver solver(k, s);
     return solver.getMaxSubsetSize();
 }
+
 
 void testNonDivisibleSubset() {
     int n, k;
@@ -345,6 +386,7 @@ void testNonDivisibleSubset() {
     cout << nonDivisibleSubset(k, s) << endl;
 
 }
+
 
 class SinglyList {
 private:
@@ -552,6 +594,9 @@ int main() {
     
     //Divisible Subset
     testNonDivisibleSubset();
+
+    //Ball Organizer 
+    testBallOrganizer();
 
     return 0;
 }
