@@ -246,6 +246,37 @@ string encryption(string s) {
 }
 
 
+string biggerIsGreater(string w) {
+    int i = w.length() - 2;
+
+    while (i >= 0 && w[i] >= w[i + 1]) i--;
+
+    if (i == -1)
+        return "no answer";
+
+    int j = w.length() - 1;
+    while (w[j] <= w[i]) j--;
+
+    swap(w[i], w[j]);
+    reverse(w.begin() + i + 1, w.end());
+
+    return w;
+}
+
+
+void testBiggerIsGreater() {
+    int T;
+    cin >> T;
+    cin.ignore();
+
+    while (T--) {
+        string w;
+        getline(cin, w);
+        cout << biggerIsGreater(w) << '\n';
+    }
+}
+
+
 void testEncryption() {
     vector<pair<string, string>> tests = {
         {"haveaniceday", "hae and via ecy"},
@@ -597,6 +628,9 @@ int main() {
 
     //Ball Organizer 
     testBallOrganizer();
+
+    //Bigger is Greater
+    testBiggerIsGreater();
 
     return 0;
 }

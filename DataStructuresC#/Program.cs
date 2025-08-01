@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
+using System.Text;
 
 /// <summary>
 /// Main entry point for running multiple algorithm, data structure demos and HackerRank/LeetCode problems.
@@ -168,8 +169,10 @@ class Program
         Console.WriteLine(subsetSolver.GetMaxSubsetSize());
 
         // ---------------- Ball Organizer ----------------
-
         sol.TestBallOrganizer();
+
+        // ---------------- Bigger is Greate ----------------
+        sol.TestBiggerIsGreater();
     }
 
 
@@ -603,7 +606,46 @@ public class BallOrganizer
 }
 
 
+/// <summary>
+/// finds the next lexicographically greater permutation of the given word.
+/// if no greater word is possible, returns "no answer".
+/// </summary>
 
+
+public class BiggerIsGreaterSolver
+{
+    public static string BiggerIsGreater(string w)
+    {
+        char[] chars = w.ToCharArray();
+        int i = chars.Length - 2;
+
+        // Step 1: Find pivot
+        while (i >= 0 && chars[i] >= chars[i + 1])
+            i--;
+
+        if (i == -1)
+            return "no answer";
+
+        // Step 2: Find successor
+        int j = chars.Length - 1;
+        while (chars[j] <= chars[i])
+            j--;
+
+        // Step 3: Swap and Step 4: Reverse
+        Swap(chars, i, j);
+        Array.Reverse(chars, i + 1, chars.Length - i - 1);
+
+        return new string(chars);
+
+    }
+
+    private static void Swap(char[] arr, int i, int j)
+    {
+        char tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+}
 public class Solution
 {
 
@@ -675,5 +717,14 @@ public class Solution
             Console.WriteLine(BallOrganizer.CheckPossibility(containers));
         }
 
+    }
+    public void TestBiggerIsGreater()
+    {
+        int T = int.Parse(Console.ReadLine());
+        for (int t = 0; t < T; t++)
+        {
+            string w = Console.ReadLine();
+            Console.WriteLine(BiggerIsGreaterSolver.BiggerIsGreater(w));
+        }
     }
 }
