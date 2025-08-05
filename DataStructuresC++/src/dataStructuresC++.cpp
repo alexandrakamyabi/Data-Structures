@@ -294,6 +294,33 @@ void testEncryption() {
     cout << "all tests passed!\n";
 }
 
+string numberToWords(int n) {
+    vector<string> words = {
+     "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+        "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen",
+        "eighteen", "nineteen", "twenty", "twenty one", "twenty two", "twenty three",
+        "twenty four", "twenty five", "twenty six", "twenty seven", "twenty eight",
+        "twenty nine"
+    };
+    return words[n];
+}
+
+
+string timeInWords(int h, int m) {
+    if (m == 0)
+        return numberToWords(h) + " o' clock";
+    else if (m == 15)
+        return "quarter past " + numberToWords(h);
+    else if (m == 30)
+        return "half past " + numberToWords(h);
+    else if (m == 45)
+        return "quarter to " + numberToWords(h + 1);
+    else if (m < 30)
+        return numberToWords(m) + (m == 1 ? " minute past " : " minutes past ") + numberToWords(h);
+    else
+        return numberToWords(60 - m) + ((60 - m) == 1 ? " minute to " : " minutes to ") + numberToWords(h + 1);
+}
+
 
 // ---------------------------- CLASS STRUCTURES ----------------------------
 
@@ -479,6 +506,38 @@ void SinglyList::Remove(const Student& s) {
 }
 
 
+struct Person {
+    string name;
+    int age;
+};
+
+
+void sortPeople(vector<Person>& people) {
+    sort(people.begin(), people.end(), [](const Person& a, const Person& b) {
+        if (a.age == b.age)
+            return a.name < b.name;
+        return a.age < b.age;
+        });
+}
+
+
+void testLambdaSort() {
+    vector<Person> people = {
+     {"Alice", 30},
+     {"Bob", 25},
+     {"Charlie", 30},
+     {"David", 25}
+    };
+
+    sortPeople(people);
+
+    for (const auto& p : people)
+        cout << p.name << " - " << p.age << endl;
+
+
+}
+
+
 vector<int> climbingLeaderboard(vector<int> ranked, vector<int> player) {
     vector<int> result;
     // remove duplicates and sort descending
@@ -631,6 +690,9 @@ int main() {
 
     //Bigger is Greater
     testBiggerIsGreater();
+
+    //Lambda Practice Problem
+    testLambdaSort();
 
     return 0;
 }

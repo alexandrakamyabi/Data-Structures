@@ -173,6 +173,9 @@ class Program
 
         // ---------------- Bigger is Greate ----------------
         sol.TestBiggerIsGreater();
+
+        // ---------------- Lambda Sort ----------------
+        sol.TestLambdaSort();
     }
 
 
@@ -577,6 +580,34 @@ public class NonDivisibleSubsetSolver
 
 
 /// <summary>
+/// given a list of people’s names and ages, sorts them by:
+/// age ascending**, and if ages are equal
+/// name lexicographically ascending**
+/// </summary>
+
+public class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+
+
+public class LambdaSort
+{
+    public static void SortPeople(List<Person> people)
+    {
+        var sorted = people
+            .OrderBy(p => p.Age)
+            .ThenBy(p => p.Name)
+            .ToList();
+
+        foreach (var person in sorted)
+            Console.WriteLine($"{person.Name} - {person.Age}");
+    }
+}
+
+
+/// <summary>
 /// Checks if it's possible to sort containers so that each type of ball is in its own container.
 /// </summary>
 
@@ -726,5 +757,17 @@ public class Solution
             string w = Console.ReadLine();
             Console.WriteLine(BiggerIsGreaterSolver.BiggerIsGreater(w));
         }
+    }
+    public void TestLambdaSort()
+    {
+        var people = new List<Person>
+        {
+            new Person { Name = "Alice", Age = 30 },
+            new Person { Name = "Bob", Age = 25 },
+            new Person { Name = "Charlie", Age = 30 },
+            new Person { Name = "David", Age = 25 }
+        };
+
+        LambdaSort.SortPeople(people);
     }
 }
