@@ -275,6 +275,31 @@ public class TreeNode
 
 
 /// <summary>
+/// LINQ filtering practice problem
+/// </summary>
+
+
+public class Employee
+{
+    public string Name;
+    public string Department;
+    public int Salary;
+}
+
+
+public class LINQFilter
+{
+    public static List<string> GetHighPaidEngineers(List<Employee> employees)
+    {
+        return employees
+            .Where(e => e.Department == "Engineering" && e.Salary >= 100000)
+            .Select(e => e.Name)
+            .ToList();
+    }
+}
+
+
+/// <summary>
 /// Determines which cat will catch the mouse first or if the mouse escapes.
 /// </summary>
 /// <param name="catA">Position of Cat A</param>
@@ -769,5 +794,18 @@ public class Solution
         };
 
         LambdaSort.SortPeople(people);
+    }
+    public void TestLINQFilter()
+    {
+        var employees = new List<Employee>
+        {
+            new Employee { Name = "Alice", Department = "Engineering", Salary = 120000 },
+            new Employee { Name = "Bob", Department = "HR", Salary = 95000 },
+            new Employee { Name = "Charlie", Department = "Engineering", Salary = 99000 },
+            new Employee { Name = "David", Department = "Engineering", Salary = 110000 }
+        };
+
+        var result = LINQFilter.GetHighPaidEngineers(employees);
+        Console.WriteLine(string.Join(", ", result));  // Output: Alice, David
     }
 }

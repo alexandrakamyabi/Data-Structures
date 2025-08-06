@@ -639,6 +639,43 @@ void SinglyList::Print() {
 }
 
 
+struct Employee {
+    string name;
+    string department;
+    int salary;
+};
+
+
+vector<string> getHighPaidEngineers(const vector<Employee>& employees) {
+    vector<string> result;
+
+    for (const auto& e : employees) {
+        if (e.department == "Engineering" && e.salary >= 100000) {
+            result.push_back(e.name);
+        }
+    }
+
+    return result;
+}
+
+
+void testLINQFilter() {
+    vector<Employee> employees = {
+    {"Alice", "Engineering", 120000},
+    {"Bob", "HR", 95000},
+    {"Charlie", "Engineering", 99000},
+    {"David", "Engineering", 110000}
+    };
+
+    vector<string> result = getHighPaidEngineers(employees);
+
+    for (const string& name : result)
+        cout << name << " ";
+    cout << endl;
+
+}
+
+
 // ---------------------------- MAIN ----------------------------
 
 
@@ -693,6 +730,9 @@ int main() {
 
     //Lambda Practice Problem
     testLambdaSort();
+
+    //Practice LINQ Filtering Problem
+    testLINQFilter();
 
     return 0;
 }
