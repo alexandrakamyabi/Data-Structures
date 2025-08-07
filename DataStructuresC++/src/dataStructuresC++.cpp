@@ -676,6 +676,68 @@ void testLINQFilter() {
 }
 
 
+struct TrieNode
+{
+    unordered_map<char, TrieNode*> children;
+    string word;
+};
+
+
+class WordSearch {
+public:
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        TrieNode* root = buildTrie(words);
+        vector<string> result;
+
+        int rows = board.size();
+        int cols = board[0].size();
+
+        for (int r = 0; r < rows; ++r)
+            for (int c = 0; c < cols; ++c)
+                dfs(board, r, c, root, result);
+
+        return result;
+    }
+private:
+    TrieNode* buildTrie(const vector<string>& words) {
+        TrieNode* root = new TrieNode();
+        for (const string& word : words) {
+            TrieNode* node = root;
+            for (char ch : word) {
+                if (!node->children[ch])
+                    node->children[ch] = new TrieNode();
+                node = node->children[ch];
+            }
+            node->word = word;
+        }
+        return root;
+    }
+
+    void dfs(vector<vector<char>>& board, int r, int c, TrieNode* node, vector<string>& result) {
+        char ch = board[r][c];
+        if (node->children.find(ch) == node->children.end()) return;
+
+        TrieNode* nextNode = node->children[ch];
+        if (!nextNode->word.empty()) {
+            result.push_back(nextNode->word);
+            nextNode->word.clear(); // prevent duplicate
+        }
+
+        board[r][c] = '#';
+
+        vector<pair<int, int>> directions = { {-1,0}, {1,0}, {0,-1}, {0,1} };
+        for (auto [dr, dc] : directions) {
+            int nr = r + dr, nc = c + dc;
+            if (nr >= 0 && nr < board.size() && nc >= 0 && nc < board[0].size() && board[nr][nc] != '#') {
+                dfs(board, nr, nc, nextNode, result);
+            }
+        }
+
+        board[r][c] = ch;
+    }
+};
+
+
 // ---------------------------- MAIN ----------------------------
 
 

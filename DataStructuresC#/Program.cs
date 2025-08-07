@@ -702,6 +702,87 @@ public class BiggerIsGreaterSolver
         arr[j] = tmp;
     }
 }
+
+
+/// <summary>
+/// find all words from the list that can be formed by sequentially adjacent letters on the board. 
+/// a letter cell is not reused.
+/// </summary>
+
+
+public class TrieNode
+{
+    public Dictionary<char, TrieNode> Children = new();
+    public string Word = null;
+}
+
+
+public class WordSearch
+{
+    private TrieNode BuildTrie(string[] words)
+    {
+        TrieNode root = new();
+        foreach (var word in words)
+        {
+            var node = root;
+            foreach (var ch in word)
+            {
+                if (!node.Children.ContainsKey(ch))
+                    node.Children[ch] = new TrieNode();
+                node = node.Children[ch];
+            }
+            node.Word = word;
+        }
+        return root;
+    }
+
+    public IList<string> FindWords(char[][] board, string[] words)
+    {
+        var result = new List<string>();
+        TrieNode root = BuildTrie(words);
+
+        int rows = board.Length;
+        int cols = board[0].Length;
+
+        for (int r = 0; r < rows; r++)
+            for (int c = 0; c < cols; c++)
+                DFS(board, r, c, root, result);
+
+        return result;
+    }
+
+    private void DFS(char[][] board, int r, int c, TrieNode node, List<string> result)
+    {
+        char ch = board[r][c];
+
+        if (!node.Children.ContainsKey(ch)) return;
+
+        TrieNode nextNode = node.Children[ch];
+        if (nextNode.Word != null)
+        {
+            result.Add(nextNode.Word);
+            nextNode.Word = null; // prevent duplicates
+        }
+
+        board[r][c] = '#'; // mark visited
+
+        int[] dx = { -1, 1, 0, 0 };
+        int[] dy = { 0, 0, -1, 1 };
+
+        for (int i = 0; i < 4; i++)
+        {
+            int nr = r + dx[i], nc = c + dy[i];
+            if (nr >= 0 && nr < board.Length && nc >= 0 && nc < board[0].Length && board[nr][nc] != '#')
+            {
+                DFS(board, nr, nc, nextNode, result);
+            }
+        }
+
+        board[r][c] = ch; // unmark
+    }
+}
+
+
 public class Solution
 {
 
