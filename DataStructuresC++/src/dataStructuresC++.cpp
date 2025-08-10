@@ -738,6 +738,61 @@ private:
 };
 
 
+class LRUCache {
+public:
+    explicit LRUCache(int capacity) : cap(capacity) {}
+
+    int get(int key) {
+        auto it = pos.find(key);
+        if (it == pos.end()) return -1;
+        // move node to front (most recent)
+        cache.splice(cache.begin(), cache, it->second);
+        return it->second->second;
+    }
+
+    void put(int key, int value) {
+        auto it = pos.find(key);
+        if (it != pos.end()) {
+            // update & move to front
+            it->second->second = value;
+            cache.splice(cache.begin(), cache, it->second);
+            return;
+        }
+        // insert new
+        if ((int)cache.size() == cap) {
+            // evict least recent (back)
+            int k = cache.back().first;
+            pos.erase(k);
+            cache.pop_back();
+        }
+        cache.emplace_front(key, value);
+        pos[key] = cache.begin();
+    }
+
+private:
+    int cap;
+    // list of (key,value), front = most recent
+    std::list<std::pair<int, int>> cache;
+    // key -> iterator into list
+    std::unordered_map<int, std::list<std::pair<int, int>>::iterator> pos;
+};
+
+
+static void RunLRUTests() {
+    LRUCache lru(2);
+    lru.put(1, 1);
+    lru.put(2, 2);
+    assert(lru.get(1) == 1);   // use 1
+    lru.put(3, 3);             // evicts 2
+    assert(lru.get(2) == -1);
+    lru.put(4, 4);             // evicts 1
+    assert(lru.get(1) == -1);
+    assert(lru.get(3) == 3);
+    assert(lru.get(4) == 4);
+    std::cout << "lru tests passed\n";
+}
+
+
 // ---------------------------- MAIN ----------------------------
 
 
@@ -795,6 +850,9 @@ int main() {
 
     //Practice LINQ Filtering Problem
     testLINQFilter();
+
+    //LRU Cache
+    RunLRUTests();
 
     return 0;
 }

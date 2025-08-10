@@ -783,6 +783,72 @@ public class WordSearch
 }
 
 
+/// <summary>
+/// this program implements an LRU (Least Recently Used) cache that stores a fixed number of key–value pairs.
+/// keep track of the most recently accessed items so that when the cache is full, it removes the least recently used item first
+
+
+public class LRUCache
+{
+    private readonly int _cap;
+    // most recent at head
+    private readonly LinkedList<(int key, int val)> _list = new();
+    // key -> node
+    private readonly Dictionary<int, LinkedListNode<(int key, int val)>> _pos = new();
+
+    public LRUCache(int capacity) => _cap = capacity;
+
+    public int Get(int key)
+    {
+        if (!_pos.TryGetValue(key, out var node)) return -1;
+        _list.Remove(node);
+        _list.AddFirst(node);
+        return node.Value.val;
+    }
+
+    public void Put(int key, int value)
+    {
+        if (_pos.TryGetValue(key, out var node))
+        {
+            node.Value = (key, value);
+            _list.Remove(node);
+            _list.AddFirst(node);
+            return;
+        }
+
+        if (_list.Count == _cap)
+        {
+            var lru = _list.Last!;
+            _pos.Remove(lru.Value.key);
+            _list.RemoveLast();
+        }
+
+        var newNode = new LinkedListNode<(int key, int val)>((key, value));
+        _list.AddFirst(newNode);
+        _pos[key] = newNode;
+    }
+}
+
+
+public static class LruTests
+{
+    public static void Run()
+    {
+        var lru = new LRUCache(2);
+        lru.Put(1, 1);
+        lru.Put(2, 2);
+        Debug.Assert(lru.Get(1) == 1); // use 1
+        lru.Put(3, 3);                 // evicts 2
+        Debug.Assert(lru.Get(2) == -1);
+        lru.Put(4, 4);                 // evicts 1
+        Debug.Assert(lru.Get(1) == -1);
+        Debug.Assert(lru.Get(3) == 3);
+        Debug.Assert(lru.Get(4) == 4);
+        Console.WriteLine("✅ C# LRU tests passed");
+    }
+}
+
+
 public class Solution
 {
 
