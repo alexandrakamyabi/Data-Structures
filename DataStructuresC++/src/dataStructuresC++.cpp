@@ -793,6 +793,64 @@ static void RunLRUTests() {
 }
 
 
+template <typename T>
+class BoundedBlockingQueue {
+public:
+    explicit BoundedBlockingQueue(size_t capacity) : cap_(capacity) {}
+
+    void Enqueue(const T& value) {
+        std::unique_lock<std::mutex> lock(m_);
+        not_full_.wait(lock, [&] { return q_.size() < cap_;  });
+        q_.push_back(value);
+        lock.unlock();
+        not_empty_.notify_one();
+    }
+
+    T Dequeue() {
+        std::unique_lock<std::mutex> lock(m_);
+        not_empty_.wait(lock, [&] { return !q_.empty(); });
+        T value = std::move(q_.front());
+        q_.pop_front();
+        lock.unlock();
+        not_full_.notify_one();
+        return value;
+    }
+
+private:
+    const size_t cap_;
+    std::deque<T> q_;
+    std::mutex m_;
+    std::condition_variable not_empty_;
+    std::condition_variable not_full_;
+};
+
+
+void testBoundedBlockingQueue() {
+    BoundedBlockingQueue<int> q(3);
+
+    auto producer = [&](int id) {
+        for (int i = 0; i < 5; ++i) {
+            q.Enqueue(id * 100 + i);
+            // std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+        };
+
+    auto consumer = [&](int id) {
+        for (int i = 0; i < 5; ++i) {
+            int v = q.Dequeue();
+            std::cout << "C" << id << " got " << v << "\n";
+            // std::this_thread::sleep_for(std::chrono::milliseconds(15));
+        }
+        };
+
+    std::thread p1(producer, 1), p2(producer, 2);
+    std::thread c1(consumer, 1), c2(consumer, 2);
+
+    p1.join(); p2.join();
+    c1.join(); c2.join();
+}
+
+
 // ---------------------------- MAIN ----------------------------
 
 
@@ -853,6 +911,9 @@ int main() {
 
     //LRU Cache
     RunLRUTests();
+
+    //Bounded Blocking Queue
+    testBoundedBlockingQueue();
 
     return 0;
 }
