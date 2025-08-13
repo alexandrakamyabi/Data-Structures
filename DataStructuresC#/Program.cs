@@ -792,7 +792,7 @@ public class WordSearch
 /// <summary>
 /// this program implements an LRU (Least Recently Used) cache that stores a fixed number of key–value pairs.
 /// keep track of the most recently accessed items so that when the cache is full, it removes the least recently used item first
-
+/// </summary>
 
 public class LRUCache
 {
@@ -853,7 +853,10 @@ public static class LruTests
         Console.WriteLine("C# LRU tests passed");
     }
 }
-
+/// <summary>
+/// a thread-safe queue with a fixed capacity
+/// that supports multiple producers and consumers.
+/// </summary>
 
 public class BoundedBlockingQueue<T>
 {
