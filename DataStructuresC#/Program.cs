@@ -176,6 +176,12 @@ class Program
 
         // ---------------- Lambda Sort ----------------
         sol.TestLambdaSort();
+
+        // ---------------- Bounded Blocking Queue ----------------
+        sol.BoundedBlocking();
+
+        // ---------------- Test LINQ Filter ----------------
+        sol.TestLINQFilter();
     }
 
 
@@ -844,7 +850,59 @@ public static class LruTests
         Debug.Assert(lru.Get(1) == -1);
         Debug.Assert(lru.Get(3) == 3);
         Debug.Assert(lru.Get(4) == 4);
-        Console.WriteLine("✅ C# LRU tests passed");
+        Console.WriteLine("C# LRU tests passed");
+    }
+}
+
+
+public class BoundedBlockingQueue<T>
+{
+    private readonly int _cap;
+    private readonly Queue<T> _q = new();
+    private readonly SemaphoreSlim _slots; // counts free slots
+    private readonly SemaphoreSlim _items; // counts available items
+    private readonly object _lock = new();
+
+    public BoundedBlockingQueue(int capacity)
+    {
+        if (capacity <= 0) throw new ArgumentOutOfRangeException(nameof(capacity));
+        _cap = capacity;
+        _slots = new SemaphoreSlim(capacity, capacity);
+        _items = new SemaphoreSlim(0, capacity);
+    }
+
+    // Synchronous
+    public void Enqueue(T item)
+    {
+        _slots.Wait(); // wait for a free slot
+        lock (_lock) _q.Enqueue(item);
+        _items.Release(); // signal item available
+    }
+
+    public T Dequeue()
+    {
+        _items.Wait(); // wait for an item
+        T item;
+        lock (_lock) item = _q.Dequeue();
+        _slots.Release(); // signal a free slot
+        return item;
+    }
+
+    // Async-friendly versions (optional but great for real services)
+    public async Task EnqueueAsync(T item, CancellationToken ct = default)
+    {
+        await _slots.WaitAsync(ct).ConfigureAwait(false);
+        lock (_lock) _q.Enqueue(item);
+        _items.Release();
+    }
+
+    public async Task<T> DequeueAsync(CancellationToken ct = default)
+    {
+        await _items.WaitAsync(ct).ConfigureAwait(false);
+        T item;
+        lock (_lock) item = _q.Dequeue();
+        _slots.Release();
+        return item;
     }
 }
 
@@ -942,6 +1000,7 @@ public class Solution
 
         LambdaSort.SortPeople(people);
     }
+
     public void TestLINQFilter()
     {
         var employees = new List<Employee>
@@ -954,5 +1013,25 @@ public class Solution
 
         var result = LINQFilter.GetHighPaidEngineers(employees);
         Console.WriteLine(string.Join(", ", result));  // Output: Alice, David
+    }
+
+    public async Task BoundedBlocking()
+    {
+        var q = new BoundedBlockingQueue<int>(3);
+
+        var producers = new[]
+        {
+            Task.Run(async () => { for (int i=0;i<5;i++) await q.EnqueueAsync(100+i); }),
+            Task.Run(async () => { for (int i=0;i<5;i++) await q.EnqueueAsync(200+i); }),
+        };
+
+        var consumers = new[]
+        {
+            Task.Run(async () => { for (int i=0;i<5;i++) Console.WriteLine($"C1 got {await q.DequeueAsync()}"); }),
+            Task.Run(async () => { for (int i=0;i<5;i++) Console.WriteLine($"C2 got {await q.DequeueAsync()}"); }),
+        };
+
+        await Task.WhenAll(producers);
+        await Task.WhenAll(consumers);
     }
 }
