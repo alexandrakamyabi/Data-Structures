@@ -182,6 +182,10 @@ class Program
 
         // ---------------- Test LINQ Filter ----------------
         sol.TestLINQFilter();
+
+
+        // ---------------- Dijkstra Demo ----------------
+        sol.DijkstraDemo();
     }
 
 
@@ -910,6 +914,70 @@ public class BoundedBlockingQueue<T>
 }
 
 
+
+public class Graph
+{
+    private readonly int _n;
+    private readonly bool _directed;
+    private readonly List<(int to, int w)>[] _g;
+
+    public Graph(int n, bool directed = true)
+    {
+        _n = n;
+        _directed = directed;
+        _g = new List<(int to, int w)>[n];
+        for (int i = 0; i < n; i++) _g[i] = new List<(int, int)>();
+    }
+
+    public void AddEdge(int u, int v, int w)
+    {
+        _g[u].Add((v, w));
+        if (!_directed) _g[v].Add((u, w));
+    }
+
+    // Returns (dist, parent). dist[i] = long.MaxValue/4 if unreachable.
+    public (long[] dist, int[] parent) Dijkstra(int source)
+    {
+        long INF = long.MaxValue / 4;
+        var dist = new long[_n];
+        var parent = new int[_n];
+        Array.Fill(dist, INF);
+        Array.Fill(parent, -1);
+
+        var pq = new PriorityQueue<int, long>(); // node with priority=distance
+
+        dist[source] = 0;
+        pq.Enqueue(source, 0);
+
+        while (pq.Count > 0)
+        {
+            pq.TryDequeue(out int u, out long d);
+            if (d != dist[u]) continue; // stale
+
+            foreach (var (to, w) in _g[u])
+            {
+                long nd = d + w;
+                if (nd < dist[to])
+                {
+                    dist[to] = nd;
+                    parent[to] = u;
+                    pq.Enqueue(to, nd);
+                }
+            }
+        }
+        return (dist, parent);
+    }
+
+    public static IList<int> BuildPath(int target, int[] parent)
+    {
+        var path = new List<int>();
+        for (int v = target; v != -1; v = parent[v]) path.Add(v);
+        path.Reverse();
+        return path;
+    }
+}
+
+
 public class Solution
 {
 
@@ -1037,4 +1105,18 @@ public class Solution
         await Task.WhenAll(producers);
         await Task.WhenAll(consumers);
     }
-}
+    public void DijkstraDemo()
+    {
+        var g = new Graph(5, directed: true);
+        g.AddEdge(0, 1, 2);
+        g.AddEdge(0, 2, 5);
+        g.AddEdge(1, 2, 1);
+        g.AddEdge(1, 3, 2);
+        g.AddEdge(2, 3, 1);
+        g.AddEdge(3, 4, 3);
+    
+        var (dist, parent) = g.Dijkstra(0);
+        Console.WriteLine($"dist[4] = {dist[4]}"); // 7
+        Console.WriteLine("path: " + string.Join(" ", Graph.BuildPath(4, parent))); // 0 1 2 3 4
+    }
+    }

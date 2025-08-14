@@ -264,6 +264,83 @@ string biggerIsGreater(string w) {
 }
 
 
+struct Edge { int to; int w; };
+
+
+class Graph {
+public:
+    explicit Graph(int n, bool directed = true)
+        : n_(n), directed_(directed), g_(n) {
+    }
+
+    void addEdge(int u, int v, int w) {
+        g_[u].push_back({ v, w });
+        if (!directed_) g_[v].push_back({ u, w });
+    }
+
+    // Returns pair {dist, parent}. dist[i] = INF if unreachable.
+    pair<vector<long long>, vector<int>> dijkstra(int source) const {
+        const long long INF = LLONG_MAX / 4;
+        vector<long long> dist(n_, INF);
+        vector<int> parent(n_, -1);
+
+        using Node = pair<long long, int>; // {dist, node}
+        priority_queue<Node, vector<Node>, greater<Node>> pq;
+
+        dist[source] = 0;
+        pq.push({ 0, source });
+
+        while (!pq.empty()) {
+            auto [d, u] = pq.top(); pq.pop();
+            if (d != dist[u]) continue; // stale
+
+            for (const auto& e : g_[u]) {
+                if (dist[e.to] > d + e.w) {
+                    dist[e.to] = d + e.w;
+                    parent[e.to] = u;
+                    pq.push({ dist[e.to], e.to });
+                }
+            }
+        }
+        return { dist, parent };
+    }
+
+    // Reconstruct path source->target using parent returned by dijkstra
+    static vector<int> buildPath(int target, const vector<int>& parent) {
+        vector<int> path;
+        for (int v = target; v != -1; v = parent[v]) path.push_back(v);
+        reverse(path.begin(), path.end());
+        return path;
+    }
+
+private:
+    int n_;
+    bool directed_;
+    vector<vector<Edge>> g_;
+};
+
+
+// --- tiny demo ---
+static void RunDijkstraDemo() {
+    // 5 nodes: 0..4
+    Graph g(5, true);
+    g.addEdge(0, 1, 2);
+    g.addEdge(0, 2, 5);
+    g.addEdge(1, 2, 1);
+    g.addEdge(1, 3, 2);
+    g.addEdge(2, 3, 1);
+    g.addEdge(3, 4, 3);
+
+    auto [dist, parent] = g.dijkstra(0);
+    // dist to 4 should be 0->1->2->3->4 = 2+1+1+3 = 7
+    cout << "dist[4] = " << dist[4] << "\n"; // 7
+    auto path = Graph::buildPath(4, parent);
+    cout << "path: ";
+    for (int v : path) cout << v << " ";
+    cout << "\n";
+}
+
+
 void testBiggerIsGreater() {
     int T;
     cin >> T;
@@ -914,6 +991,9 @@ int main() {
 
     //Bounded Blocking Queue
     testBoundedBlockingQueue();
+
+    //Dijkstra Demo
+    RunDijkstraDemo();
 
     return 0;
 }
