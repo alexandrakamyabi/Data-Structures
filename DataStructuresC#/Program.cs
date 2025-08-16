@@ -186,6 +186,9 @@ class Program
 
         // ---------------- Dijkstra Demo ----------------
         sol.DijkstraDemo();
+
+        // ---------------- Read Write Lock ----------------
+        sol.ReadWriteLockDemo();
     }
 
 
@@ -978,6 +981,66 @@ public class Graph
 }
 
 
+
+public class ReadWriteLock
+{
+    private readonly object _lock = new();
+    private int _readersActive = 0;
+    private int _writersWaiting = 0;
+    private bool _writerActive = false;
+
+    public void LockRead()
+    {
+        lock (_lock)
+        {
+            while (_writerActive || _writersWaiting > 0)
+                Monitor.Wait(_lock);
+            _readersActive++;
+        }
+    }
+
+    public void UnlockRead()
+    {
+        lock (_lock)
+        {
+            _readersActive--;
+            if (_readersActive == 0)
+                Monitor.Pulse(_lock); // wake writer
+        }
+    }
+
+    public void LockWrite()
+    {
+        lock (_lock)
+        {
+            _writersWaiting++;
+            try
+            {
+                while (_writerActive || _readersActive > 0)
+                    Monitor.Wait(_lock);
+                _writerActive = true;
+            }
+            finally
+            {
+                _writersWaiting--;
+            }
+        }
+    }
+
+    public void UnlockWrite()
+    {
+        lock (_lock)
+        {
+            _writerActive = false;
+            // Prefer writers first to avoid writer starvation
+            if (_writersWaiting > 0) Monitor.Pulse(_lock);
+            else Monitor.PulseAll(_lock); // wake readers
+        }
+    }
+}
+
+
+
 public class Solution
 {
 
@@ -1119,4 +1182,54 @@ public class Solution
         Console.WriteLine($"dist[4] = {dist[4]}"); // 7
         Console.WriteLine("path: " + string.Join(" ", Graph.BuildPath(4, parent))); // 0 1 2 3 4
     }
+
+    public void ReadWriteLockDemo()
+    {
+        var rw = new ReadWriteLock();
+        int shared = 0;
+
+        Task[] readers = new Task[3];
+        for (int i = 0; i < readers.Length; i++)
+        {
+            int id = i + 1;
+            readers[i] = Task.Run(() =>
+            {
+                for (int k = 0; k < 5; k++)
+                {
+                    rw.LockRead();
+                    Console.WriteLine($"R{id} read {shared}");
+                    rw.UnlockRead();
+                    Thread.Sleep(10);
+                }
+            });
+        }
+
+        Task writer1 = Task.Run(() =>
+        {
+            for (int k = 0; k < 5; k++)
+            {
+                rw.LockWrite();
+                shared += 1;
+                Console.WriteLine($"W1 wrote {shared}");
+                rw.UnlockWrite();
+                Thread.Sleep(25);
+            }
+        });
+
+        Task writer2 = Task.Run(() =>
+        {
+            for (int k = 0; k < 5; k++)
+            {
+                rw.LockWrite();
+                shared += 1;
+                Console.WriteLine($"W2 wrote {shared}");
+                rw.UnlockWrite();
+                Thread.Sleep(25);
+            }
+        });
+
+        Task.WaitAll(readers);
+        Task.WaitAll(writer1, writer2);
     }
+
+}
