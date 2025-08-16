@@ -928,6 +928,82 @@ void testBoundedBlockingQueue() {
 }
 
 
+class ReadWriteLock {
+public:
+    void LockRead() {
+        std::unique_lock<std::mutex> lk(m_);
+        readers_waiting_++;
+        cv_read_.wait(lk, [&] {
+            return !writer_active_ && writers_waiting_ == 0;
+            });
+        readers_waiting_--;
+        readers_active_++;
+    }
+
+    void UnlockRead() {
+        std::lock_guard<std::mutex> lk(m_);
+        readers_active_--;
+        if (readers_active_ == 0) cv_write_.notify_one();
+    }
+
+    void LockWrite() {
+        std::unique_lock<std::mutex> lk(m_);
+        writers_waiting_++;
+        cv_write_.wait(lk, [&] {
+            return !writer_active_ && readers_active_ == 0;
+            });
+        writers_waiting_--;
+        writer_active_ = true;
+    }
+
+    void UnlockWrite() {
+        std::lock_guard<std::mutex> lk(m_);
+        writer_active_ = false;
+        // Prefer writers first to avoid writer starvation
+        if (writers_waiting_ > 0) cv_write_.notify_one();
+        else cv_read_.notify_all();
+    }
+
+private:
+    std::mutex m_;
+    std::condition_variable cv_read_, cv_write_;
+    int readers_active_ = 0;
+    int readers_waiting_ = 0;
+    int writers_waiting_ = 0;
+    bool writer_active_ = false;
+};
+
+// --- Tiny demo: 3 readers, 2 writers on shared value ---
+static void RunRwDemo() {
+    ReadWriteLock rw;
+    int shared = 0;
+
+    auto reader = [&](int id) {
+        for (int i = 0; i < 5; ++i) {
+            rw.LockRead();
+            int v = shared; // read
+            std::cout << "R" << id << " read " << v << "\n";
+            rw.UnlockRead();
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+        };
+
+    auto writer = [&](int id) {
+        for (int i = 0; i < 5; ++i) {
+            rw.LockWrite();
+            shared += 1; // write
+            std::cout << "W" << id << " wrote " << shared << "\n";
+            rw.UnlockWrite();
+            std::this_thread::sleep_for(std::chrono::milliseconds(25));
+        }
+        };
+
+    std::thread r1(reader, 1), r2(reader, 2), r3(reader, 3);
+    std::thread w1(writer, 1), w2(writer, 2);
+    r1.join(); r2.join(); r3.join(); w1.join(); w2.join();
+}
+
+
 // ---------------------------- MAIN ----------------------------
 
 
@@ -994,6 +1070,9 @@ int main() {
 
     //Dijkstra Demo
     RunDijkstraDemo();
+
+    //Read Write Lock 
+    RunRwDemo();
 
     return 0;
 }
